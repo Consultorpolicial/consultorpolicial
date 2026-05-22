@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Asesor Policial · Policía Nacional de Colombia</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#1B2A6B;--azul2:#152259;--azul3:#2a3f9e;
+  --verde:#2D6A2D;--verde2:#1a4a1a;
+  --damero:#C8D400;--rojo:#c0392b;--naranja:#e67e22;
+  --bg:#f2f4f8;--bg2:#e8eaf0;--blanco:#fff;
+  --texto:#1a1a2e;--gris:#6b7280;
+  --card-bg:#fff;--header-bg:#152259;--main-bg:#f2f4f8;
+  --border:#e8eaf0;--input-bg:#f2f4f8;
+}
+[data-theme="dark"]{
+  --azul:#3a5fc8;--azul2:#0d1535;--azul3:#2a3f9e;
+  --bg:#0f172a;--bg2:#1e293b;--blanco:#1e293b;
+  --texto:#e2e8f0;--gris:#94a3b8;
+  --card-bg:#1e293b;--header-bg:#0d1535;--main-bg:#0f172a;
+  --border:#334155;--input-bg:#0f172a;
+  --damero:#C8D400;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+body{font-family:'Barlow',sans-serif;background:var(--header-bg);color:var(--texto);display:flex;flex-direction:column;max-width:480px;margin:0 auto;transition:background .3s}
+
+/* HEADER */
+.header{background:var(--header-bg);padding:11px 14px 9px;display:flex;align-items:center;gap:10px;border-bottom:3px solid var(--damero);flex-shrink:0;z-index:10}
+.escudo{width:42px;height:42px;background:var(--verde);border-radius:50%;border:2.5px solid var(--damero);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.h-text h1{color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.h-text p{color:var(--damero);font-family:'Barlow Condensed',sans-serif;font-size:8px;letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.h-actions{margin-left:auto;display:flex;gap:6px;align-items:center}
+.h-btn{width:32px;height:32px;border-radius:50%;background:rgba(200,212,0,.15);border:1px solid rgba(200,212,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;transition:all .2s}
+.h-btn.on{background:rgba(192,57,43,.3);border-color:#c0392b;animation:pulse 1s infinite}
+.hbadge{background:var(--damero);color:var(--azul2);font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;padding:3px 7px;border-radius:3px;letter-spacing:.06em;flex-shrink:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,.4)}50%{box-shadow:0 0 0 6px rgba(192,57,43,0)}}
+
+.damero-bar{height:7px;background:repeating-linear-gradient(90deg,var(--damero) 0,var(--damero) 7px,var(--azul2) 7px,var(--azul2) 14px);flex-shrink:0}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;background:var(--main-bg);-webkit-overflow-scrolling:touch}
+.panel{display:none;padding:13px;animation:fadeIn .2s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* LOGIN */
+.login-wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;background:var(--main-bg)}
+.login-card{background:var(--card-bg);border-radius:20px;padding:28px 22px;width:100%;max-width:380px;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.login-escudo{width:64px;height:64px;background:var(--verde);border-radius:50%;border:3px solid var(--damero);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px}
+.login-titulo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--azul);text-align:center;letter-spacing:.06em;text-transform:uppercase}
+.login-sub{font-size:12px;color:var(--gris);text-align:center;margin-top:4px;margin-bottom:20px;line-height:1.5}
+.trial-badge{background:#e8f5e9;border:1px solid #2D6A2D;border-radius:8px;padding:8px 12px;text-align:center;margin-bottom:16px;font-size:12px;color:#1a4a1a;font-weight:500}
+.trial-badge strong{display:block;font-size:14px;color:#2D6A2D;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em}
+.inp-login{width:100%;font-family:'Barlow',sans-serif;font-size:14px;color:var(--texto);background:var(--input-bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;margin-bottom:10px;transition:border-color .15s}
+.inp-login:focus{outline:none;border-color:var(--azul)}
+.btn-login{background:var(--azul);color:#fff;border:none;padding:13px;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;width:100%;margin-top:4px;transition:all .15s}
+.btn-login:active{transform:scale(.98)}
+.btn-login.verde{background:var(--verde)}
+.login-toggle{text-align:center;margin-top:14px;font-size:12px;color:var(--gris)}
+.login-toggle span{color:var(--azul);font-weight:600;cursor:pointer}
+.trial-info{background:#fff8e6;border:1px solid #e8c97a;border-radius:8px;padding:8px 12px;font-size:11px;color:#7a5f00;margin-top:10px;line-height:1.6;text-align:center}
+.login-error{background:#fff0f0;border:1px solid #f5c6c6;border-radius:8px;padding:8px 12px;font-size:12px;color:#8b0000;margin-bottom:10px;display:none}
+
+/* USUARIO INFO */
+.user-bar{background:rgba(200,212,0,.1);border-bottom:1px solid rgba(200,212,0,.2);padding:6px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.user-info{font-size:10px;color:var(--damero);font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em}
+.trial-countdown{font-size:10px;color:#fff;font-family:'Barlow Condensed',sans-serif;background:var(--verde);padding:2px 8px;border-radius:10px;letter-spacing:.04em}
+.trial-countdown.urgente{background:var(--rojo)}
+
+/* BIENVENIDA */
+.bienvenida{background:linear-gradient(135deg,var(--azul2),var(--azul3));border-radius:14px;padding:15px;margin-bottom:12px}
+.bv-t{color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.04em}
+.bv-s{color:rgba(255,255,255,.7);font-size:12px;margin-top:3px;line-height:1.5}
+.bv-chips{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.chip{background:rgba(200,212,0,.2);color:var(--damero);font-size:10px;padding:3px 9px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;border:1px solid rgba(200,212,0,.3)}
+
+.slabel{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.12em;margin-bottom:7px}
+
+/* MODOS */
+.modos{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.modo-btn{border-radius:13px;padding:16px 8px;text-align:center;cursor:pointer;border:none;position:relative;overflow:hidden;transition:transform .15s;-webkit-user-select:none}
+.modo-btn:active{transform:scale(.97)}
+.modo-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--damero);opacity:.7}
+.modo-calle{background:linear-gradient(150deg,var(--azul2),var(--azul3))}
+.modo-interno{background:linear-gradient(150deg,var(--verde2),var(--verde))}
+.modo-ico{font-size:26px;margin-bottom:5px}
+.modo-t{color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.modo-s{color:rgba(255,255,255,.6);font-size:9px;margin-top:2px;font-family:'Barlow Condensed',sans-serif}
+
+/* CARDS */
+.herr-card{background:var(--card-bg);border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:11px;cursor:pointer;border-left:4px solid transparent;transition:all .15s;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:7px}
+.herr-card:active{transform:scale(.99)}
+.herr-card.azul{border-left-color:var(--azul)}.herr-card.verde{border-left-color:var(--verde)}.herr-card.dorado{border-left-color:#b8940a}.herr-card.gris{border-left-color:#999}
+.herr-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.herr-t{font-size:13px;font-weight:600;color:var(--texto)}.herr-s{font-size:10px;color:var(--gris);margin-top:1px}
+.herr-arrow{margin-left:auto;color:#ccc;font-size:16px;flex-shrink:0}
+
+/* SITUACIONES PREDEFINIDAS */
+.sits-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.sit-btn{background:var(--card-bg);border-radius:10px;padding:10px 8px;text-align:center;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;border:none;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.sit-btn:active{transform:scale(.97);background:var(--bg2)}
+.sit-ico{font-size:20px;margin-bottom:4px}
+.sit-t{font-size:10px;font-weight:600;color:var(--texto);line-height:1.3;font-family:'Barlow Condensed',sans-serif;letter-spacing:.03em}
+
+/* CHAT */
+.chat-wrap{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.msg{border-radius:11px;padding:11px 13px;font-size:13px;line-height:1.7;animation:fadeIn .25s ease}
+.msg-user{background:var(--azul);color:#fff;align-self:flex-end;max-width:88%;border-bottom-right-radius:3px}
+.msg-ia{background:var(--card-bg);border:1px solid var(--border);border-left:4px solid var(--azul);max-width:95%;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.msg-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.msg-user .msg-label{color:rgba(255,255,255,.7)}.msg-ia .msg-label{color:var(--azul)}
+.msg-error{background:#fff0f0;border:1px solid #f5c6c6;border-left:4px solid var(--rojo);border-radius:11px;padding:11px 13px;font-size:13px;color:#8b0000}
+.loading{background:var(--card-bg);border:1px solid var(--border);border-left:4px solid var(--damero);border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:9px;font-size:12px;color:var(--gris);font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em}
+.dots{display:flex;gap:4px}.dots span{width:5px;height:5px;background:var(--damero);border-radius:50%;animation:bounce 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+/* SEMAFORO */
+.semaforo{display:flex;gap:7px;margin-bottom:11px}
+.sem{flex:1;border-radius:9px;padding:9px 5px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:2px solid transparent;opacity:.35;transition:all .15s}
+.sem.active{opacity:1;transform:scale(1.03)}
+.sem-verde{background:#e8f5e9;color:#1a6b3c;border-color:#1a6b3c}
+.sem-rojo{background:#fff0f0;color:var(--rojo);border-color:var(--rojo)}
+.sem-amarillo{background:#fff8e6;color:#b8940a;border-color:#b8940a}
+.sem-ico{font-size:18px;margin-bottom:2px}
+
+/* INPUTS */
+.input-area{background:var(--card-bg);border-radius:13px;padding:11px;margin-bottom:9px;box-shadow:0 1px 5px rgba(0,0,0,.05)}
+.input-row{display:flex;gap:7px;align-items:flex-end}
+textarea.inp{flex:1;border:1.5px solid var(--border);border-radius:9px;padding:9px 11px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--texto);resize:none;height:78px;background:var(--input-bg);transition:border-color .15s}
+textarea.inp:focus{outline:none;border-color:var(--azul)}
+.inp-btns{display:flex;flex-direction:column;gap:5px}
+.btn-mic{width:36px;height:36px;border-radius:50%;background:var(--bg2);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;transition:all .2s}
+.btn-mic.on{background:rgba(192,57,43,.15);animation:pulse 1s infinite}
+.btn-send{width:36px;height:36px;border-radius:50%;background:var(--azul);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;transition:all .15s}
+.btn-send:active{transform:scale(.95)}
+.seg-row{display:flex;gap:7px;margin-top:9px}
+.seg-row input{flex:1;border:1.5px solid var(--border);border-radius:9px;padding:9px 11px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--texto);background:var(--input-bg)}
+.seg-row input:focus{outline:none;border-color:var(--azul)}
+select,input[type=text],input[type=email],input[type=password]{width:100%;font-family:'Barlow',sans-serif;font-size:13px;color:var(--texto);background:var(--card-bg);border:1.5px solid var(--border);border-radius:9px;padding:9px 11px;margin-bottom:9px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center}
+select:focus,input:focus{outline:none;border-color:var(--azul)}
+input[type=text],input[type=email],input[type=password]{background-image:none}
+
+/* BOTONES */
+.btn-primary{background:var(--azul);color:#fff;border:none;padding:12px 18px;border-radius:11px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s;margin-top:3px}
+.btn-primary:active{transform:scale(.98)}.btn-primary:disabled{background:#aaa;cursor:not-allowed}
+.btn-verde{background:var(--verde)}.btn-copy{background:var(--bg2);color:var(--azul);margin-top:7px;font-size:12px}
+.btn-row{display:flex;gap:7px;margin-top:3px}
+.btn-row .btn-primary{flex:1;margin-top:0}
+
+/* UPLOAD */
+.upload-zone{border:2px dashed var(--border);border-radius:13px;padding:22px;text-align:center;cursor:pointer;transition:all .2s;background:var(--card-bg);margin-bottom:9px}
+.upload-zone.drag{border-color:var(--azul);background:rgba(27,42,107,.05)}
+.upload-ico{font-size:30px;margin-bottom:7px}
+.upload-t{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--azul);letter-spacing:.04em}
+.upload-s{font-size:11px;color:var(--gris);margin-top:3px}
+#file-input{display:none}
+.file-prev{background:var(--card-bg);border-radius:9px;padding:9px 13px;display:flex;align-items:center;gap:9px;border:1px solid var(--border);margin-bottom:9px}
+.fname{font-size:12px;font-weight:600;color:var(--texto)}.fsize{font-size:10px;color:var(--gris)}
+
+/* NORMAS */
+.norma-section{margin-bottom:4px}
+.norma-section-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;color:var(--gris);text-transform:uppercase;letter-spacing:.1em;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.norma-card{background:var(--card-bg);border-radius:11px;padding:10px 13px;margin-bottom:7px;cursor:pointer;border-left:4px solid var(--azul);box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;align-items:center;gap:11px;transition:all .15s}
+.norma-card:active{transform:scale(.99)}.norma-card.verde{border-left-color:var(--verde)}.norma-card.dorado{border-left-color:#b8940a}.norma-card.rojo{border-left-color:var(--rojo)}.norma-card.naranja{border-left-color:var(--naranja)}
+.norma-ico{font-size:20px;flex-shrink:0}
+.norma-t{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--azul);letter-spacing:.03em}
+[data-theme="dark"] .norma-t{color:#7ba3f5}
+.norma-s{font-size:10px;color:var(--gris);margin-top:1px}
+.norma-tag{display:inline-block;font-size:9px;padding:2px 7px;border-radius:4px;margin-top:3px;font-family:'Barlow Condensed',sans-serif;font-weight:600}
+.norma-tag{background:#e8f0ff;color:var(--azul)}.norma-tag.verde{background:#e8f5e9;color:var(--verde)}.norma-tag.dorado{background:#fff8e6;color:#b8940a}.norma-tag.rojo{background:#fff0f0;color:var(--rojo)}.norma-tag.naranja{background:#fff3e0;color:var(--naranja)}
+.buscar-row{display:flex;gap:7px;margin-bottom:11px}
+.buscar-row input{flex:1;margin-bottom:0;background-image:none}
+.btn-buscar{background:var(--azul);color:#fff;border:none;padding:9px 14px;border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.04em;white-space:nowrap}
+
+/* FAVORITOS */
+.fav-btn{width:26px;height:26px;border-radius:50%;background:none;border:none;cursor:pointer;font-size:16px;margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+
+/* CALCULADORA PLAZOS */
+.calc-result{background:var(--card-bg);border-radius:11px;border-left:4px solid var(--damero);padding:13px;margin-top:9px;display:none}
+.calc-fecha{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--azul);margin-bottom:3px}
+.calc-dias{font-size:12px;color:var(--gris)}
+.calc-alert{background:#fff0f0;border-radius:8px;padding:8px 11px;font-size:11px;color:var(--rojo);margin-top:7px;display:none}
+
+/* GLOSARIO */
+.glos-item{background:var(--card-bg);border-radius:10px;padding:11px 13px;margin-bottom:7px;border-left:3px solid var(--damero);cursor:pointer}
+.glos-term{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--azul);letter-spacing:.03em}
+.glos-def{font-size:12px;color:var(--gris);margin-top:3px;line-height:1.5;display:none}
+.glos-item.open .glos-def{display:block}
+
+/* HISTORIAL */
+.hist-item{background:var(--card-bg);border-radius:11px;padding:11px 13px;margin-bottom:7px;cursor:pointer;border-left:4px solid var(--azul);box-shadow:0 1px 3px rgba(0,0,0,.05);transition:transform .1s}
+.hist-item:active{transform:scale(.99)}
+.hist-tipo{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--azul);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.hist-texto{font-size:12px;color:var(--texto);line-height:1.5}.hist-fecha{font-size:10px;color:var(--gris);margin-top:3px}
+.hist-vacio{text-align:center;padding:36px 18px;color:var(--gris);font-size:13px}
+
+/* MISC */
+.aviso{background:#fff8e6;border:1px solid #e8c97a;border-left:4px solid #b8940a;border-radius:9px;padding:9px 11px;margin-bottom:11px;font-size:11px;color:#7a5f00;line-height:1.6}
+[data-theme="dark"] .aviso{background:#2a1f00;border-color:#5a4400;color:#e8c97a}
+.sep{border:none;border-top:1px solid var(--border);margin:12px 0}
+.row-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.row-header .slabel{margin-bottom:0}
+.btn-limpiar{font-size:15px;background:none;border:none;cursor:pointer;color:var(--gris);padding:2px}
+
+/* NAVBAR */
+.navbar{background:var(--card-bg);border-top:2px solid var(--damero);display:flex;justify-content:space-around;padding:7px 0 11px;flex-shrink:0}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#bbb;cursor:pointer;padding:3px 6px;border:none;background:none;transition:color .15s;position:relative}
+.nav-btn.active{color:var(--azul)}.nav-ico{font-size:19px}
+.nav-dot{width:3px;height:3px;border-radius:50%;background:var(--damero);position:absolute;bottom:0;left:50%;transform:translateX(-50%);display:none}
+.nav-btn.active .nav-dot{display:block}
+
+/* PERFIL */
+.perfil-avatar{width:70px;height:70px;background:var(--verde);border-radius:50%;border:3px solid var(--damero);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px}
+.perfil-nombre{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--azul);text-align:center;letter-spacing:.04em}
+[data-theme="dark"] .perfil-nombre{color:#7ba3f5}
+.perfil-correo{font-size:12px;color:var(--gris);text-align:center;margin-top:3px}
+.perfil-card{background:var(--card-bg);border-radius:14px;padding:20px;margin-bottom:10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.perfil-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
+.perfil-stat{background:var(--bg);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)}
+.perfil-stat-num{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--azul)}
+[data-theme="dark"] .perfil-stat-num{color:#7ba3f5}
+.perfil-stat-lbl{font-size:10px;color:var(--gris);margin-top:2px}
+.btn-cerrar-sesion{background:#fff0f0;color:var(--rojo);border:1.5px solid #f5c6c6;border-radius:10px;padding:11px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.05em;cursor:pointer;width:100%;margin-top:4px}
+
+/* PANTALLA PRUEBA VENCIDA */
+.vencida-screen{position:fixed;inset:0;background:var(--main-bg);z-index:999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.vencida-card{background:var(--card-bg);border-radius:20px;padding:28px 22px;width:100%;max-width:380px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.vencida-ico{font-size:52px;margin-bottom:12px}
+.vencida-titulo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--rojo);letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+.vencida-sub{font-size:13px;color:var(--gris);line-height:1.6;margin-bottom:18px}
+.beneficios{background:var(--bg);border-radius:12px;padding:14px;margin-bottom:18px;text-align:left}
+.beneficio{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:var(--texto);line-height:1.5}
+.beneficio:last-child{margin-bottom:0}
+.beneficio-ico{font-size:16px;flex-shrink:0}
+.btn-pagar{background:var(--verde);color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;width:100%;margin-bottom:8px}
+.btn-pagar:active{transform:scale(.98)}
+.btn-contactar{background:none;color:var(--azul);border:1.5px solid var(--azul);padding:11px;border-radius:12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+
+/* AVISO 2 DÍAS */
+.aviso-trial{background:linear-gradient(135deg,#fff3cd,#ffe8a1);border:1px solid #e8c97a;border-left:4px solid #b8940a;border-radius:10px;padding:10px 13px;margin-bottom:11px;font-size:12px;color:#7a5f00;line-height:1.6;display:none}
+
+/* BOTÓN RETROCESO */
+.btn-back{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--gris);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.05em;cursor:pointer;padding:0 0 10px 0;text-transform:uppercase}
+.btn-back:active{color:var(--azul)}
+
+/* NORMAS TOGGLE */
+.norma-card.expandida{border-radius:11px 11px 0 0;margin-bottom:0}
+.norma-detalle{background:var(--card-bg);border:1px solid var(--border);border-top:none;border-radius:0 0 11px 11px;padding:11px 13px;margin-bottom:7px;font-size:12px;color:var(--gris);line-height:1.7;display:none}
+.norma-detalle.visible{display:block}
+.norma-detalle-btns{display:flex;gap:7px;margin-top:9px}
+.norma-detalle-btn{flex:1;background:var(--azul);color:#fff;border:none;padding:8px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.04em}
+.norma-detalle-btn.verde{background:var(--verde)}
+</style>
+</head>
+<body>
+
+<!-- ===== PANTALLA LOGIN ===== -->
+<div id="login-screen" style="display:flex;flex-direction:column;height:100%;background:var(--main-bg)">
+  <div style="height:7px;background:repeating-linear-gradient(90deg,var(--damero) 0,var(--damero) 7px,#152259 7px,#152259 14px)"></div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-escudo">🛡️</div>
+      <div class="login-titulo">Asesor Policial</div>
+      <div class="login-sub">Policía Nacional de Colombia<br>Herramienta jurídica para todos los funcionarios</div>
+
+      <!-- REGISTRO -->
+      <div id="form-registro">
+        <div class="trial-badge">
+          <strong>🎁 10 DÍAS DE PRUEBA GRATIS</strong>
+          Regístrate con tu correo y empieza ya
+        </div>
+        <div class="login-error" id="reg-error"></div>
+        <input type="text" class="inp-login" id="reg-nombre" placeholder="Nombre completo" />
+        <input type="email" class="inp-login" id="reg-correo" placeholder="Correo electrónico" />
+        <input type="password" class="inp-login" id="reg-pass" placeholder="Crear contraseña (mín. 6 caracteres)" />
+        <button class="btn-login verde" onclick="registrar()">🚀 Crear cuenta gratis</button>
+        <div class="trial-info">✅ Sin tarjeta de crédito · ✅ 10 días completos · ✅ Acceso a todas las funciones</div>
+        <div class="login-toggle">¿Ya tienes cuenta? <span onclick="toggleLogin('login')">Iniciar sesión</span></div>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="form-login" style="display:none">
+        <div class="login-error" id="login-error"></div>
+        <input type="email" class="inp-login" id="login-correo" placeholder="Correo electrónico" />
+        <input type="password" class="inp-login" id="login-pass" placeholder="Contraseña" />
+        <button class="btn-login" onclick="iniciarSesion()">🔐 Ingresar</button>
+        <div class="login-toggle">¿No tienes cuenta? <span onclick="toggleLogin('registro')">Regístrate gratis</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="height:7px;background:repeating-linear-gradient(90deg,var(--damero) 0,var(--damero) 7px,#152259 7px,#152259 14px)"></div>
+</div>
+
+<!-- PANTALLA PRUEBA VENCIDA -->
+<div class="vencida-screen" id="vencida-screen">
+  <div class="vencida-card">
+    <div class="vencida-ico">🔒</div>
+    <div class="vencida-titulo">Tu prueba gratuita ha finalizado</div>
+    <div class="vencida-sub">Gracias por probar <strong>Asesor Policial</strong> durante 10 días. Suscríbete para continuar accediendo a todas las funciones.</div>
+    <div class="beneficios">
+      <div class="beneficio"><div class="beneficio-ico">🚔</div><div><strong>Modo Calle</strong> — Semáforo jurídico instantáneo con voz</div></div>
+      <div class="beneficio"><div class="beneficio-ico">⚖️</div><div><strong>Apelaciones completas</strong> — Recursos listos para firmar con Ley 2196</div></div>
+      <div class="beneficio"><div class="beneficio-ico">📚</div><div><strong>Normatividad completa</strong> — Todas las especialidades actualizadas</div></div>
+      <div class="beneficio"><div class="beneficio-ico">✍️</div><div><strong>Redactor profesional</strong> — Informes, partes y novedades oficiales</div></div>
+      <div class="beneficio"><div class="beneficio-ico">📎</div><div><strong>Análisis de documentos</strong> — PDF y fotos analizados por IA</div></div>
+      <div class="beneficio"><div class="beneficio-ico">🎤</div><div><strong>Control por voz</strong> — Habla y la app responde</div></div>
+    </div>
+    <button class="btn-pagar" onclick="contactarPago()">💳 Quiero suscribirme</button>
+    <button class="btn-contactar" onclick="contactarWA()">📲 Contactar por WhatsApp</button>
+    <div style="margin-top:12px;font-size:10px;color:var(--gris)">¿Ya pagaste? <span style="color:var(--azul);cursor:pointer;font-weight:600" onclick="cerrarSesion()">Inicia sesión de nuevo</span></div>
+  </div>
+</div>
+
+<!-- ===== APP PRINCIPAL ===== -->
+<div id="app-screen" style="display:none;flex-direction:column;height:100%">
+
+  <div class="header">
+    <div class="escudo">🛡️</div>
+    <div class="h-text">
+      <h1>Asesor Policial</h1>
+      <p>Policía Nacional de Colombia</p>
+    </div>
+    <div class="h-actions">
+      <div class="h-btn" id="mic-hdr" onclick="vozGlobal()" title="Voz">🎤</div>
+      <div class="h-btn" id="theme-btn" onclick="toggleTheme()" title="Modo oscuro">🌙</div>
+      <div class="h-btn" onclick="irPerfil()" title="Mi perfil">👤</div>
+      <div class="hbadge">v3.1</div>
+    </div>
+  </div>
+  <div class="damero-bar"></div>
+  <div class="user-bar" id="user-bar">
+    <div class="user-info" id="user-info-txt">👮 Bienvenido</div>
+    <div class="trial-countdown" id="trial-badge">● 10 días prueba</div>
+  </div>
+
+  <div class="main" id="main">
+
+    <!-- PERFIL -->
+    <div class="panel" id="panel-perfil">
+      <button class="btn-back" onclick="ir('inicio')">← Volver</button>
+      <div class="perfil-card">
+        <div class="perfil-avatar">👮</div>
+        <div class="perfil-nombre" id="perfil-nombre">—</div>
+        <div class="perfil-correo" id="perfil-correo">—</div>
+      </div>
+      <div class="perfil-stats">
+        <div class="perfil-stat">
+          <div class="perfil-stat-num" id="perfil-dias">—</div>
+          <div class="perfil-stat-lbl">Días restantes</div>
+        </div>
+        <div class="perfil-stat">
+          <div class="perfil-stat-num" id="perfil-registro">—</div>
+          <div class="perfil-stat-lbl">Fecha registro</div>
+        </div>
+      </div>
+      <div class="slabel">Cambiar contraseña</div>
+      <input type="password" id="pass-nueva" placeholder="Nueva contraseña (mín. 6 caracteres)" />
+      <input type="password" id="pass-confirmar" placeholder="Confirmar nueva contraseña" />
+      <button class="btn-primary" onclick="cambiarPass()">🔐 Actualizar contraseña</button>
+      <div id="pass-msg" style="font-size:12px;text-align:center;margin-top:8px;display:none"></div>
+      <button class="btn-cerrar-sesion" onclick="cerrarSesion()" style="margin-top:14px">🚪 Cerrar sesión</button>
+    </div>
+
+    <!-- INICIO -->
+    <div class="panel active" id="panel-inicio">
+      <div class="aviso-trial" id="aviso-trial">⚠️ <strong>Tu prueba vence en menos de 2 días.</strong> Contáctanos para continuar usando Asesor Policial sin interrupciones.</div>
+      <div class="bienvenida">
+        <div class="bv-t" id="bv-saludo">👋 Bienvenido</div>
+        <div class="bv-s">¿Con qué situación necesitas ayuda hoy? Escribe, habla 🎤 o elige una opción.</div>
+        <div class="bv-chips">
+          <div class="chip">🚔 Calle</div><div class="chip">⚖️ Disciplinario</div>
+          <div class="chip">📚 Normas</div><div class="chip">✍️ Redactar</div>
+        </div>
+      </div>
+
+      <div class="slabel">Modo de consulta</div>
+      <div class="modos">
+        <button class="modo-btn modo-calle" onclick="ir('calle')">
+          <div class="modo-ico">🚔</div><div class="modo-t">Calle</div><div class="modo-s">Respuesta rápida</div>
+        </button>
+        <button class="modo-btn modo-interno" onclick="ir('interno')">
+          <div class="modo-ico">⚖️</div><div class="modo-t">Disciplinario</div><div class="modo-s">Apelaciones</div>
+        </button>
+      </div>
+
+      <div class="slabel">Herramientas</div>
+      <div class="herr-card azul" onclick="ir('normas')">
+        <div class="herr-ico" style="background:#e8f0ff">📚</div>
+        <div><div class="herr-t">Normatividad</div><div class="herr-s">Todas las especialidades · Leyes · Decretos</div></div>
+        <div class="herr-arrow">›</div>
+      </div>
+      <div class="herr-card verde" onclick="ir('redactor')">
+        <div class="herr-ico" style="background:#e8f5e9">✍️</div>
+        <div><div class="herr-t">Redactar documento</div><div class="herr-s">Anotaciones · Informes · Partes · Novedades</div></div>
+        <div class="herr-arrow">›</div>
+      </div>
+      <div class="herr-card dorado" onclick="ir('archivos')">
+        <div class="herr-ico" style="background:#fff8e6">📎</div>
+        <div><div class="herr-t">Subir archivo</div><div class="herr-s">PDF o foto — la IA lo analiza</div></div>
+        <div class="herr-arrow">›</div>
+      </div>
+      <div class="herr-card azul" onclick="ir('calc')">
+        <div class="herr-ico" style="background:#e8f0ff">📅</div>
+        <div><div class="herr-t">Calculadora de plazos</div><div class="herr-s">¿Cuándo vence mi recurso?</div></div>
+        <div class="herr-arrow">›</div>
+      </div>
+      <div class="herr-card gris" onclick="ir('glosario')">
+        <div class="herr-ico" style="background:#f5f5f5">📖</div>
+        <div><div class="herr-t">Glosario policial</div><div class="herr-s">Términos técnicos explicados</div></div>
+        <div class="herr-arrow">›</div>
+      </div>
+      <div class="herr-card gris" onclick="ir('historial');renderH()">
+        <div class="herr-ico" style="background:#f5f5f5">🕐</div>
+        <div><div class="herr-t">Historial</div><div class="herr-s">Consultas anteriores guardadas</div></div>
+        <div class="herr-arrow">›</div>
+      </div>
+    </div>
+
+    <!-- CALLE -->
+    <div class="panel" id="panel-calle">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="aviso">⚡ <strong>Modo Calle</strong> — Semáforo jurídico instantáneo.</div>
+
+      <div class="slabel">Situaciones frecuentes</div>
+      <div class="sits-grid">
+        <button class="sit-btn" onclick="sitPredefinida('Ciudadano que se niega a identificarse en procedimiento policial')">
+          <div class="sit-ico">🪪</div><div class="sit-t">No se identifica</div>
+        </button>
+        <button class="sit-btn" onclick="sitPredefinida('Riña entre ciudadanos en vía pública, cómo intervenir')">
+          <div class="sit-ico">🥊</div><div class="sit-t">Riña en vía pública</div>
+        </button>
+        <button class="sit-btn" onclick="sitPredefinida('Persona en estado de embriaguez alterando el orden público')">
+          <div class="sit-ico">🍺</div><div class="sit-t">Embriaguez pública</div>
+        </button>
+        <button class="sit-btn" onclick="sitPredefinida('Cuándo está justificado el uso de la fuerza por parte del policía')">
+          <div class="sit-ico">✋</div><div class="sit-t">Uso de la fuerza</div>
+        </button>
+        <button class="sit-btn" onclick="sitPredefinida('Retención preventiva de persona, requisitos y procedimiento legal')">
+          <div class="sit-ico">⛓️</div><div class="sit-t">Retención preventiva</div>
+        </button>
+        <button class="sit-btn" onclick="sitPredefinida('Registro o requisa de persona en la calle, cuándo es legal')">
+          <div class="sit-ico">🔍</div><div class="sit-t">Registro / requisa</div>
+        </button>
+      </div>
+
+      <div class="input-area">
+        <div class="row-header">
+          <div class="slabel" style="margin-bottom:0">O describe la situación</div>
+          <button class="btn-limpiar" onclick="limpiar('calle-txt','chat-c','sem-box','seg-c-box')">🧹</button>
+        </div>
+        <div class="input-row">
+          <textarea class="inp" id="calle-txt" placeholder="Describe la situación que tienes frente a ti..."></textarea>
+          <div class="inp-btns">
+            <button class="btn-mic" id="mic-c" onclick="voz('calle-txt','mic-c')">🎤</button>
+            <button class="btn-send" onclick="analizarCalle()">⚡</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="sem-box" style="display:none">
+        <div class="semaforo">
+          <div class="sem sem-verde" id="sv"><div class="sem-ico">🟢</div>PUEDES</div>
+          <div class="sem sem-amarillo" id="sa"><div class="sem-ico">🟡</div>CON COND.</div>
+          <div class="sem sem-rojo" id="sr"><div class="sem-ico">🔴</div>NO PUEDES</div>
+        </div>
+      </div>
+      <div class="chat-wrap" id="chat-c"></div>
+      <div id="seg-c-box" style="display:none;margin-top:9px">
+        <hr class="sep">
+        <div class="seg-row">
+          <input type="text" id="seg-c" placeholder="Pregunta de seguimiento..." />
+          <button class="btn-send" onclick="segCalle()">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERNO -->
+    <div class="panel" id="panel-interno">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="aviso">⚖️ <strong>Modo Disciplinario</strong> — Recursos y apelaciones con respaldo en Ley 2196 vigente.</div>
+      <div class="slabel">Tipo de recurso</div>
+      <select id="tipo-rec">
+        <option value="">Seleccione...</option>
+        <option>Recurso de reposición</option>
+        <option>Recurso de apelación</option>
+        <option>Queja disciplinaria</option>
+        <option>Derecho de petición</option>
+        <option>Acción de tutela (orientación)</option>
+      </select>
+      <div class="slabel">Actuación que se recurre</div>
+      <select id="act-rec">
+        <option value="">Seleccione...</option>
+        <option>Anotación negativa en hoja de vida</option>
+        <option>Sanción disciplinaria</option>
+        <option>Calificación de servicios desfavorable</option>
+        <option>Traslado injustificado</option>
+        <option>Negación de permiso o licencia</option>
+        <option>Comisión de servicio irregular</option>
+        <option>Otra actuación</option>
+      </select>
+      <div class="slabel">Tu nombre completo y grado</div>
+      <input type="text" id="nombre-ap" placeholder="Ej: Patrullero Juan Carlos Martínez López" />
+      <div class="input-area" style="margin-bottom:9px">
+        <div class="row-header">
+          <div class="slabel" style="margin-bottom:0">Describe los hechos</div>
+          <button class="btn-limpiar" onclick="limpiarInterno()">🧹</button>
+        </div>
+        <div class="input-row">
+          <textarea class="inp" id="hechos-ap" placeholder="¿Qué ocurrió, cuándo, quién decidió, te notificaron, pudiste presentar descargos?"></textarea>
+          <div class="inp-btns">
+            <button class="btn-mic" id="mic-i" onclick="voz('hechos-ap','mic-i')">🎤</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary btn-verde" id="btn-ap" onclick="generarAp()">📝 Generar recurso completo</button>
+      <div class="chat-wrap" id="chat-i"></div>
+    </div>
+
+    <!-- NORMAS -->
+    <div class="panel" id="panel-normas">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="buscar-row">
+        <input type="text" id="buscar-q" placeholder="Buscar norma, artículo o especialidad..." />
+        <button class="btn-buscar" onclick="buscarN()">🔍</button>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">⚖️ Régimen Disciplinario</div>
+        <div class="norma-card" onclick="normaToggle(this,'Ley 2196 de 2022 - Régimen Disciplinario vigente Policía Nacional Colombia')"><div class="norma-ico">⚖️</div><div><div class="norma-t">Ley 2196 de 2022</div><div class="norma-s">Régimen Disciplinario vigente</div><span class="norma-tag">Disciplinario · VIGENTE</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 2196 de 2022',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Ley 1952 de 2019 - Código General Disciplinario Colombia aplicación subsidiaria')"><div class="norma-ico">📕</div><div><div class="norma-t">Ley 1952 de 2019</div><div class="norma-s">Código General Disciplinario subsidiario</div><span class="norma-tag">Disciplinario</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 1952 de 2019',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Artículo 29 Constitución Política Colombia debido proceso')"><div class="norma-ico">🏛️</div><div><div class="norma-t">Art. 29 Constitución Política</div><div class="norma-s">Debido proceso</div><span class="norma-tag">Constitucional</span></div><button class="fav-btn" onclick="toggleFav(event,'Art. 29 Const.',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🚔 Convivencia y Procedimiento</div>
+        <div class="norma-card" onclick="normaToggle(this,'Ley 1801 de 2016 con modificaciones vigentes a abril 2026 - Código Nacional de Policía y Convivencia Ciudadana CNSC')"><div class="norma-ico">📋</div><div><div class="norma-t">Ley 1801 de 2016</div><div class="norma-s">Código Nacional de Policía y Convivencia — actualizada abril 2026</div><span class="norma-tag">Calle · CNSC · ✅ ACTUALIZADA</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 1801',this)">☆</button></div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Resolución 2196 Policía Nacional Colombia procedimientos operativos')"><div class="norma-ico">🔵</div><div><div class="norma-t">Resolución 2196 PN</div><div class="norma-s">Procedimientos operativos</div><span class="norma-tag verde">Operativo</span></div><button class="fav-btn" onclick="toggleFav(event,'Res. 2196',this)">☆</button></div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Resolución 2197 Policía Nacional Colombia normas procedimientos')"><div class="norma-ico">🟢</div><div><div class="norma-t">Resolución 2197 PN</div><div class="norma-s">Normas y procedimientos policiales</div><span class="norma-tag verde">Operativo</span></div><button class="fav-btn" onclick="toggleFav(event,'Res. 2197',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🛡️ Uso de la Fuerza</div>
+        <div class="norma-card dorado" onclick="normaToggle(this,'Decreto 1231 de 2024 uso diferenciado proporcional fuerza Policía Nacional Colombia')"><div class="norma-ico">⚡</div><div><div class="norma-t">Decreto 1231 de 2024</div><div class="norma-s">Uso diferenciado y proporcional de la fuerza</div><span class="norma-tag dorado">Uso fuerza · NUEVO</span></div><button class="fav-btn" onclick="toggleFav(event,'Decreto 1231/2024',this)">☆</button></div>
+        <div class="norma-card dorado" onclick="normaToggle(this,'Resolución 02903 de 2017 reglamento uso fuerza armas fuego Policía Nacional')"><div class="norma-ico">🛡️</div><div><div class="norma-t">Resolución 02903 de 2017</div><div class="norma-s">Reglamento uso de la fuerza y armas</div><span class="norma-tag dorado">Uso fuerza</span></div><button class="fav-btn" onclick="toggleFav(event,'Res. 02903',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">📜 Código Penal</div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Ley 599 de 2000 Código Penal colombiano actualizado vigente')"><div class="norma-ico">📜</div><div><div class="norma-t">Ley 599 de 2000</div><div class="norma-s">Código Penal colombiano</div><span class="norma-tag rojo">Penal</span></div><button class="fav-btn" onclick="toggleFav(event,'Código Penal',this)">☆</button></div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Ley 906 de 2004 Código Procedimiento Penal Colombia')"><div class="norma-ico">📗</div><div><div class="norma-t">Ley 906 de 2004</div><div class="norma-s">Código de Procedimiento Penal</div><span class="norma-tag rojo">Penal</span></div><button class="fav-btn" onclick="toggleFav(event,'CPP',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🔍 Seguridad Ciudadana (Vigilancia · Patrullaje · Reacción)</div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Lineamientos patrullaje urbano vigilancia Policía Nacional Colombia seguridad ciudadana')"><div class="norma-ico">🚶</div><div><div class="norma-t">Lineamientos Patrullaje Urbano</div><div class="norma-s">Vigilancia, patrullaje y reacción policial</div><span class="norma-tag verde">Seg. Ciudadana</span></div><button class="fav-btn" onclick="toggleFav(event,'Patrullaje',this)">☆</button></div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Reglamento guarnición control servicios Policía Nacional Colombia')"><div class="norma-ico">🏢</div><div><div class="norma-t">Reglamento de Guarnición</div><div class="norma-s">Control de servicios y guarnición</div><span class="norma-tag verde">Seg. Ciudadana</span></div><button class="fav-btn" onclick="toggleFav(event,'Reglamento Guarnición',this)">☆</button></div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Normas conducta actuación policial comportamiento uniformado Policía Nacional')"><div class="norma-ico">📐</div><div><div class="norma-t">Normas de Conducta Policial</div><div class="norma-s">Comportamiento y actuación del uniformado</div><span class="norma-tag verde">Conducta</span></div><button class="fav-btn" onclick="toggleFav(event,'Conducta Policial',this)">☆</button></div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Medios mantener encauzar disciplina Policía Nacional Colombia reglamento')"><div class="norma-ico">📏</div><div><div class="norma-t">Medios para Mantener la Disciplina</div><div class="norma-s">Mecanismos institucionales de disciplina</div><span class="norma-tag verde">Disciplina</span></div><button class="fav-btn" onclick="toggleFav(event,'Medios Disciplina',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🔬 Investigación Criminal (DIJIN)</div>
+        <div class="norma-card" onclick="normaToggle(this,'Ley 906 de 2004 funciones policía judicial DIJIN investigación criminal Colombia')"><div class="norma-ico">🔬</div><div><div class="norma-t">Policía Judicial — Ley 906/2004</div><div class="norma-s">Funciones DIJIN en investigación criminal</div><span class="norma-tag">DIJIN</span></div><button class="fav-btn" onclick="toggleFav(event,'DIJIN',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Resolución 04408 de 2024 DIJIN seguridad información investigación criminal')"><div class="norma-ico">🔐</div><div><div class="norma-t">Resolución 04408 de 2024</div><div class="norma-s">Seguridad de la información DIJIN</div><span class="norma-tag">DIJIN · 2024</span></div><button class="fav-btn" onclick="toggleFav(event,'Res. 04408',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Ley 599 de 2000 tipificación delitos investigación criminal Colombia')"><div class="norma-ico">📂</div><div><div class="norma-t">Tipificación Delitos — CP</div><div class="norma-s">Código Penal para investigación criminal</div><span class="norma-tag">DIJIN</span></div><button class="fav-btn" onclick="toggleFav(event,'Tipificación',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🕵️ Inteligencia Policial (DIPOL)</div>
+        <div class="norma-card naranja" onclick="normaToggle(this,'Ley 1621 de 2013 marco jurídico inteligencia contrainteligencia Colombia DIPOL')"><div class="norma-ico">🕵️</div><div><div class="norma-t">Ley 1621 de 2013</div><div class="norma-s">Marco jurídico inteligencia y contrainteligencia</div><span class="norma-tag naranja">DIPOL</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 1621',this)">☆</button></div>
+        <div class="norma-card naranja" onclick="normaToggle(this,'Decreto 857 de 2014 reglamento inteligencia policial Colombia')"><div class="norma-ico">📡</div><div><div class="norma-t">Decreto 857 de 2014</div><div class="norma-s">Reglamento actividades de inteligencia</div><span class="norma-tag naranja">DIPOL</span></div><button class="fav-btn" onclick="toggleFav(event,'Decreto 857',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🌿 Carabineros y Protección Ambiental</div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Ley 99 de 1993 medio ambiente funciones Policía Nacional carabineros protección ambiental Colombia')"><div class="norma-ico">🌿</div><div><div class="norma-t">Ley 99 de 1993</div><div class="norma-s">Medio ambiente — funciones policiales ambientales</div><span class="norma-tag verde">Carabineros</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 99',this)">☆</button></div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Ley 1801 de 2016 contravenciones ambientales protección fauna flora Colombia')"><div class="norma-ico">🐾</div><div><div class="norma-t">CNSC — Contravenciones Ambientales</div><div class="norma-s">Ley 1801 título IV — fauna y recursos naturales</div><span class="norma-tag verde">Carabineros</span></div><button class="fav-btn" onclick="toggleFav(event,'Amb. CNSC',this)">☆</button></div>
+        <div class="norma-card verde" onclick="normaToggle(this,'Decreto 1076 de 2015 sector ambiente recursos naturales renovables Colombia')"><div class="norma-ico">🏞️</div><div><div class="norma-t">Decreto 1076 de 2015</div><div class="norma-s">Sector ambiente y recursos naturales</div><span class="norma-tag verde">Carabineros</span></div><button class="fav-btn" onclick="toggleFav(event,'Decreto 1076',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🚦 Tránsito y Transporte (DITRA)</div>
+        <div class="norma-card dorado" onclick="normaToggle(this,'Ley 769 de 2002 Código Nacional Tránsito Colombia actualizado DITRA')"><div class="norma-ico">🚦</div><div><div class="norma-t">Ley 769 de 2002</div><div class="norma-s">Código Nacional de Tránsito</div><span class="norma-tag dorado">DITRA</span></div><button class="fav-btn" onclick="toggleFav(event,'Código Tránsito',this)">☆</button></div>
+        <div class="norma-card dorado" onclick="normaToggle(this,'Ley 1383 de 2010 reforma Código Tránsito Colombia sanciones infracciones')"><div class="norma-ico">📋</div><div><div class="norma-t">Ley 1383 de 2010</div><div class="norma-s">Reforma Código de Tránsito</div><span class="norma-tag dorado">DITRA</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 1383',this)">☆</button></div>
+        <div class="norma-card dorado" onclick="normaToggle(this,'Resolución 20223040009515 de 2022 infracciones tránsito Colombia vigente')"><div class="norma-ico">💳</div><div><div class="norma-t">Res. 20223040009515 de 2022</div><div class="norma-s">Infracciones y comparendos de tránsito</div><span class="norma-tag dorado">DITRA</span></div><button class="fav-btn" onclick="toggleFav(event,'Infracciones Tránsito',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">💊 Antinarcóticos (DIRAN)</div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Ley 30 de 1986 estatuto nacional estupefacientes Colombia DIRAN antinarcóticos')"><div class="norma-ico">💊</div><div><div class="norma-t">Ley 30 de 1986</div><div class="norma-s">Estatuto Nacional de Estupefacientes</div><span class="norma-tag rojo">DIRAN</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 30',this)">☆</button></div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Ley 1453 de 2011 seguridad ciudadana narcotráfico Colombia')"><div class="norma-ico">🚫</div><div><div class="norma-t">Ley 1453 de 2011</div><div class="norma-s">Seguridad ciudadana — delitos narcotráfico</div><span class="norma-tag rojo">DIRAN</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 1453',this)">☆</button></div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Ley 599 de 2000 delitos tráfico estupefacientes Colombia artículos 375 al 385')"><div class="norma-ico">⚖️</div><div><div class="norma-t">CP Art. 375–385</div><div class="norma-s">Delitos de tráfico de estupefacientes</div><span class="norma-tag rojo">DIRAN</span></div><button class="fav-btn" onclick="toggleFav(event,'CP Narcóticos',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🆘 Antisecuestro y Extorsión (GAULA)</div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Ley 282 de 1996 antisecuestro extorsión GAULA Colombia')"><div class="norma-ico">🆘</div><div><div class="norma-t">Ley 282 de 1996</div><div class="norma-s">Medidas contra el secuestro — GAULA</div><span class="norma-tag rojo">GAULA</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 282',this)">☆</button></div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Ley 733 de 2002 secuestro extorsión penas Colombia')"><div class="norma-ico">⛓️</div><div><div class="norma-t">Ley 733 de 2002</div><div class="norma-s">Penas secuestro y extorsión</div><span class="norma-tag rojo">GAULA</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 733',this)">☆</button></div>
+        <div class="norma-card rojo" onclick="normaToggle(this,'Código Penal artículo 168 secuestro simple agravado extorsión Colombia')"><div class="norma-ico">📜</div><div><div class="norma-t">CP Art. 168 — Secuestro</div><div class="norma-s">Tipificación secuestro y extorsión</div><span class="norma-tag rojo">GAULA</span></div><button class="fav-btn" onclick="toggleFav(event,'Secuestro CP',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🛡️ Protección y Servicios Especiales</div>
+        <div class="norma-card naranja" onclick="normaToggle(this,'Decreto 4065 de 2008 Unidad Nacional Protección esquemas de seguridad Colombia')"><div class="norma-ico">🛡️</div><div><div class="norma-t">Decreto 4065 de 2008</div><div class="norma-s">Esquemas de protección y seguridad</div><span class="norma-tag naranja">Protección</span></div><button class="fav-btn" onclick="toggleFav(event,'Decreto 4065',this)">☆</button></div>
+        <div class="norma-card naranja" onclick="normaToggle(this,'Resolución 1190 de 2018 protocolo intervención manifestaciones protesta social Colombia')"><div class="norma-ico">👮</div><div><div class="norma-t">Resolución 1190 de 2018</div><div class="norma-s">Protocolo intervención manifestaciones</div><span class="norma-tag naranja">Protección</span></div><button class="fav-btn" onclick="toggleFav(event,'Res. 1190',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🎓 Educación Policial (DINAE)</div>
+        <div class="norma-card" onclick="normaToggle(this,'Reglamento académico Policía Nacional Colombia DINAE escuelas formación')"><div class="norma-ico">🎓</div><div><div class="norma-t">Reglamento Académico — DINAE</div><div class="norma-s">Normas escuelas de formación policial</div><span class="norma-tag">DINAE</span></div><button class="fav-btn" onclick="toggleFav(event,'Reg. Académico',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Bienestar universitario Dirección Nacional Escuelas DINAE Policía Nacional Colombia')"><div class="norma-ico">🏫</div><div><div class="norma-t">Bienestar Universitario DINAE</div><div class="norma-s">Disposiciones bienestar escuelas policiales</div><span class="norma-tag">DINAE</span></div><button class="fav-btn" onclick="toggleFav(event,'Bienestar DINAE',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Reglamento orden cerrado Policía Nacional Colombia formaciones ceremonias')"><div class="norma-ico">🪖</div><div><div class="norma-t">Reglamento de Orden Cerrado</div><div class="norma-s">Formaciones, desfiles y ceremonias</div><span class="norma-tag">DINAE</span></div><button class="fav-btn" onclick="toggleFav(event,'Orden Cerrado',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">🕊️ Derechos Humanos (DDHH)</div>
+        <div class="norma-card" onclick="normaToggle(this,'Constitución Política Colombia derechos fundamentales artículos 11 al 41')"><div class="norma-ico">🕊️</div><div><div class="norma-t">Derechos Fundamentales — CP</div><div class="norma-s">Arts. 11–41 Constitución Política</div><span class="norma-tag">DDHH</span></div><button class="fav-btn" onclick="toggleFav(event,'DDHH CP',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Código de conducta para funcionarios encargados de cumplir ley ONU aplicación Colombia policía')"><div class="norma-ico">🌐</div><div><div class="norma-t">Código de Conducta ONU</div><div class="norma-s">Funcionarios encargados de cumplir la ley</div><span class="norma-tag">DDHH</span></div><button class="fav-btn" onclick="toggleFav(event,'ONU Conducta',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Principios básicos uso fuerza armas fuego funcionarios ONU aplicación Policía Nacional Colombia')"><div class="norma-ico">⚖️</div><div><div class="norma-t">Principios Básicos ONU</div><div class="norma-s">Uso de la fuerza y armas de fuego</div><span class="norma-tag">DDHH</span></div><button class="fav-btn" onclick="toggleFav(event,'Principios ONU',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Ley 1448 de 2011 víctimas conflicto armado Colombia reparación restitución')"><div class="norma-ico">🤝</div><div><div class="norma-t">Ley 1448 de 2011</div><div class="norma-s">Víctimas del conflicto — Ley de Víctimas</div><span class="norma-tag">DDHH</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley Víctimas',this)">☆</button></div>
+      </div>
+
+      <div class="norma-section">
+        <div class="norma-section-title">👔 Carrera y Prestaciones</div>
+        <div class="norma-card" onclick="normaToggle(this,'Decreto 1791 de 2000 régimen carrera escalafón Policía Nacional Colombia')"><div class="norma-ico">📊</div><div><div class="norma-t">Decreto 1791 de 2000</div><div class="norma-s">Carrera y escalafón policial</div><span class="norma-tag">Carrera</span></div><button class="fav-btn" onclick="toggleFav(event,'Escalafón',this)">☆</button></div>
+        <div class="norma-card" onclick="normaToggle(this,'Ley 923 de 2004 régimen prestacional pensional Policía Nacional Colombia')"><div class="norma-ico">💼</div><div><div class="norma-t">Ley 923 de 2004</div><div class="norma-s">Régimen prestacional y pensional</div><span class="norma-tag">Prestaciones</span></div><button class="fav-btn" onclick="toggleFav(event,'Ley 923',this)">☆</button></div>
+      </div>
+
+      <div class="chat-wrap" id="chat-n"></div>
+    </div>
+
+    <!-- REDACTOR -->
+    <div class="panel" id="panel-redactor">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="aviso">✍️ <strong>Redactor Profesional</strong> — Escribe en tus palabras, la app genera el documento oficial.</div>
+      <div class="slabel">Tipo de documento</div>
+      <select id="tipo-doc">
+        <option value="">Seleccione...</option>
+        <option>Anotación en libro de servicios</option>
+        <option>Informe operacional</option>
+        <option>Parte de servicio</option>
+        <option>Novedad radial</option>
+        <option>Informe para superior</option>
+        <option>Acta de procedimiento</option>
+      </select>
+      <div class="input-area" style="margin-bottom:9px">
+        <div class="row-header">
+          <div class="slabel" style="margin-bottom:0">Describe lo que ocurrió</div>
+          <button class="btn-limpiar" onclick="limpiarRedactor()">🧹</button>
+        </div>
+        <div class="input-row">
+          <textarea class="inp" id="red-txt" placeholder="En tus propias palabras..." style="height:90px"></textarea>
+          <div class="inp-btns">
+            <button class="btn-mic" id="mic-r" onclick="voz('red-txt','mic-r')">🎤</button>
+          </div>
+        </div>
+      </div>
+      <div class="slabel">Datos del oficial (opcional)</div>
+      <input type="text" id="red-nombre" placeholder="Nombre y grado (ej: Pt. Juan Martínez)" />
+      <input type="text" id="red-lugar" placeholder="Lugar del hecho" />
+      <input type="text" id="red-fecha" placeholder="Fecha y hora" />
+      <button class="btn-primary" id="btn-red" onclick="redactar()">✍️ Generar documento oficial</button>
+      <div class="chat-wrap" id="chat-r"></div>
+    </div>
+
+    <!-- ARCHIVOS -->
+    <div class="panel" id="panel-archivos">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="aviso">📎 La IA interpreta qué tipo de documento es y lo analiza jurídicamente.</div>
+      <div class="upload-zone" onclick="document.getElementById('fi').click()" id="uzone">
+        <div class="upload-ico">📎</div>
+        <div class="upload-t">Toca para seleccionar archivo</div>
+        <div class="upload-s">PDF · JPG · PNG</div>
+      </div>
+      <input type="file" id="fi" accept=".pdf,.jpg,.jpeg,.png" onchange="handleF(event)" />
+      <div id="fprev" style="display:none"></div>
+      <div class="slabel">¿Qué quieres hacer?</div>
+      <select id="arc-acc">
+        <option value="auto">La IA decide automáticamente</option>
+        <option value="analizar">Analizar el caso</option>
+        <option value="norma">Usarlo como referencia normativa</option>
+        <option value="apelar">Generar apelación</option>
+        <option value="resumir">Resumir el documento</option>
+      </select>
+      <div class="input-area" style="margin-bottom:9px">
+        <div class="input-row">
+          <textarea class="inp" id="arc-ctx" placeholder="Contexto adicional (opcional)..." style="height:65px"></textarea>
+          <div class="inp-btns">
+            <button class="btn-mic" id="mic-a" onclick="voz('arc-ctx','mic-a')">🎤</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary" id="btn-arc" onclick="analizarArc()">🔍 Analizar documento</button>
+      <div class="chat-wrap" id="chat-a"></div>
+    </div>
+
+    <!-- CALCULADORA -->
+    <div class="panel" id="panel-calc">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="aviso">📅 <strong>Calculadora de Plazos</strong> — Ingresa la fecha del acto y calcula cuándo vence tu recurso.</div>
+      <div class="slabel">Tipo de recurso</div>
+      <select id="calc-tipo" onchange="calcularPlazo()">
+        <option value="">Seleccione el recurso...</option>
+        <option value="5">Recurso de reposición (5 días hábiles)</option>
+        <option value="10">Recurso de apelación (10 días hábiles)</option>
+        <option value="15">Derecho de petición (15 días hábiles)</option>
+        <option value="10">Queja disciplinaria (10 días hábiles)</option>
+        <option value="30">Acción de tutela (10 días — urgente)</option>
+      </select>
+      <div class="slabel">Fecha del acto o notificación</div>
+      <input type="date" id="calc-fecha" onchange="calcularPlazo()" style="background-image:none;width:100%;font-family:'Barlow',sans-serif;font-size:13px;color:var(--texto);background:var(--card-bg);border:1.5px solid var(--border);border-radius:9px;padding:9px 11px;margin-bottom:9px" />
+      <div class="calc-result" id="calc-result">
+        <div class="slabel">Fecha límite para presentar</div>
+        <div class="calc-fecha" id="calc-fecha-result">—</div>
+        <div class="calc-dias" id="calc-dias-txt"></div>
+        <div class="calc-alert" id="calc-alert">⚠️ ¡El plazo está próximo a vencer o ya venció!</div>
+      </div>
+    </div>
+
+    <!-- GLOSARIO -->
+    <div class="panel" id="panel-glosario">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="buscar-row">
+        <input type="text" id="glos-q" placeholder="Buscar término..." />
+        <button class="btn-buscar" onclick="buscarGlos()">🔍</button>
+      </div>
+      <div id="glos-lista"></div>
+      <div class="chat-wrap" id="chat-glos"></div>
+    </div>
+
+    <!-- FAVORITOS -->
+    <div class="panel" id="panel-favoritos">
+      <div id="favs-lista"></div>
+    </div>
+
+    <!-- HISTORIAL -->
+    <div class="panel" id="panel-historial">
+      <button class="btn-back" onclick="ir('inicio')">← Inicio</button>
+      <div class="row-header">
+        <div class="slabel" style="margin-bottom:0">Consultas guardadas</div>
+        <button onclick="limpiarH()" style="font-size:11px;color:var(--rojo);background:none;border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.05em">🗑 LIMPIAR</button>
+      </div>
+      <div id="hlista"></div>
+    </div>
+
+  </div>
+
+  <div class="damero-bar"></div>
+  <div class="navbar">
+    <button class="nav-btn active" id="nb-inicio" onclick="ir('inicio')"><div class="nav-ico">🏠</div>Inicio<div class="nav-dot"></div></button>
+    <button class="nav-btn" id="nb-calle" onclick="ir('calle')"><div class="nav-ico">🚔</div>Calle<div class="nav-dot"></div></button>
+    <button class="nav-btn" id="nb-interno" onclick="ir('interno')"><div class="nav-ico">⚖️</div>Interno<div class="nav-dot"></div></button>
+    <button class="nav-btn" id="nb-normas" onclick="ir('normas')"><div class="nav-ico">📚</div>Normas<div class="nav-dot"></div></button>
+    <button class="nav-btn" id="nb-redactor" onclick="ir('redactor')"><div class="nav-ico">✍️</div>Redactar<div class="nav-dot"></div></button>
+  </div>
+
+</div><!-- fin app-screen -->
+
+<script>
+const KEY="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";
+const SYS=`Eres asesor jurídico experto en normatividad vigente de la Policía Nacional de Colombia para TODOS los funcionarios sin importar grado o especialidad.
+
+NORMATIVA VIGENTE:
+DISCIPLINARIO: Ley 2196/2022 (deroga Ley 1015 — NUNCA citar 1015 como vigente), Ley 1952/2019, Constitución Art.29/93/229.
+CONVIVENCIA: Ley 1801/2016 con modificaciones vigentes a abril 2026 (Código Nacional de Policía y Convivencia — última actualización 20/04/2026, fuente: leyes.co), Res.2196 PN, Res.2197 PN.
+USO FUERZA: Decreto 1231/2024, Res.02903/2017.
+PENAL: Ley 599/2000, Ley 906/2004.
+CARRERA: Decreto 1791/2000, Ley 923/2004.
+REGLAMENTOS: Orden Cerrado PN, Académico DINAE, Bienestar DINAE, Patrullaje Urbano, Normas Conducta Policial, Medios Disciplina, Reglamento Guarnición.
+DIJIN: Ley 906/2004 policía judicial, Res.04408/2024.
+DIPOL: Ley 1621/2013, Decreto 857/2014.
+CARABINEROS: Ley 99/1993, Decreto 1076/2015, Ley 1801 título ambiental.
+DITRA: Ley 769/2002, Ley 1383/2010, Res.20223040009515/2022.
+DIRAN: Ley 30/1986, Ley 1453/2011, CP arts.375-385.
+GAULA: Ley 282/1996, Ley 733/2002, CP art.168.
+PROTECCIÓN: Decreto 4065/2008, Res.1190/2018.
+DINAE: Reglamento Académico, Bienestar DINAE, Orden Cerrado.
+DDHH: CP arts.11-41, Código Conducta ONU, Principios ONU uso fuerza, Ley 1448/2011.
+
+MODO CALLE: 1)SEMÁFORO VERDE/AMARILLO/ROJO 2)Artículo vigente 3)Qué hacer 4)Qué evitar.
+MODO DISCIPLINARIO: 1)Normas violadas (Ley 2196) 2)Recursos+plazos exactos 3)Argumentos 4)Pruebas 5)Pasos.
+REDACTOR: Documento oficial con terminología policial, ortografía perfecta, normas vigentes.
+ARCHIVOS: Interpreta y analiza jurídicamente.
+
+Al final siempre: orientación informativa, no reemplaza abogado. Español colombiano formal y accesible.`;
+
+// ===== DOMINIOS TEMPORALES BLOQUEADOS =====
+const DOMINIOS_TEMP=['mailinator','tempmail','guerrillamail','yopmail','throwam','sharklasers','trashmail','maildrop','dispostable','10minutemail','fakeinbox','spamgourmet','getairmail','mailnull','spamevader','tempr.email','discard.email','spam4.me'];
+function esCorreoTemporal(correo){return DOMINIOS_TEMP.some(d=>correo.includes(d))}
+
+// ===== PERFIL =====
+function irPerfil(){
+  if(!usuarioActual)return;
+  document.getElementById('perfil-nombre').textContent=usuarioActual.nombre;
+  document.getElementById('perfil-correo').textContent=usuarioActual.correo;
+  const dias=usuarioActual.esAdmin?'∞':calcDiasRestantes(usuarioActual);
+  document.getElementById('perfil-dias').textContent=dias;
+  const fecha=new Date(usuarioActual.fechaRegistro).toLocaleDateString('es-CO',{day:'numeric',month:'short',year:'numeric'});
+  document.getElementById('perfil-registro').textContent=fecha;
+  ir('perfil');
+}
+
+function cambiarPass(){
+  const nueva=document.getElementById('pass-nueva').value;
+  const conf=document.getElementById('pass-confirmar').value;
+  const msg=document.getElementById('pass-msg');
+  if(nueva.length<6){msg.style.display='block';msg.style.color='var(--rojo)';msg.textContent='Mínimo 6 caracteres.';return}
+  if(nueva!==conf){msg.style.display='block';msg.style.color='var(--rojo)';msg.textContent='Las contraseñas no coinciden.';return}
+  const usuarios=getUsuarios();
+  const idx=usuarios.findIndex(u=>u.correo===usuarioActual.correo);
+  if(idx>=0){usuarios[idx].pass=nueva;saveUsuarios(usuarios)}
+  usuarioActual.pass=nueva;localStorage.setItem('usuario_activo',JSON.stringify(usuarioActual));
+  msg.style.display='block';msg.style.color='var(--verde)';msg.textContent='✅ Contraseña actualizada.';
+  document.getElementById('pass-nueva').value='';document.getElementById('pass-confirmar').value='';
+}
+
+function cerrarSesion(){
+  usuarioActual=null;
+  localStorage.removeItem('usuario_activo');
+  document.getElementById('app-screen').style.display='none';
+  document.getElementById('vencida-screen').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('login-correo').value='';
+  document.getElementById('login-pass').value='';
+  toggleLogin('login');
+}
+
+function contactarPago(){
+  const msg=encodeURIComponent('Hola, quiero suscribirme a Asesor Policial. Mi correo es: '+(usuarioActual?usuarioActual.correo:''));
+  window.open('https://wa.me/573000000000?text='+msg,'_blank');
+}
+function contactarWA(){contactarPago()}
+
+function verificarPrueba(u){
+  if(u.esAdmin)return;
+  const dias=calcDiasRestantes(u);
+  if(dias<=0){
+    document.getElementById('app-screen').style.display='none';
+    document.getElementById('vencida-screen').style.display='flex';
+  } else if(dias<=2){
+    document.getElementById('aviso-trial').style.display='block';
+  }
+}
+
+// ===== NORMAS TOGGLE =====
+function normaToggle(el,norma){
+  const detalleId='det-'+norma.replace(/\s/g,'').substring(0,20);
+  let detalle=document.getElementById(detalleId);
+  if(detalle){
+    detalle.classList.toggle('visible');
+    el.classList.toggle('expandida');
+    return;
+  }
+  // Crear detalle
+  detalle=document.createElement('div');
+  detalle.className='norma-detalle visible';
+  detalle.id=detalleId;
+  detalle.innerHTML=`<div style="color:var(--gris);font-size:11px;font-style:italic">Cargando información...</div>`;
+  el.classList.add('expandida');
+  el.parentNode.insertBefore(detalle,el.nextSibling);
+  // Consultar IA
+  IA([{role:'user',content:`Resume en máximo 3 líneas qué es "${norma}" y para qué le sirve al policía en su trabajo diario. Luego da los 2 artículos más importantes.`}]).then(r=>{
+    detalle.innerHTML=r+'<div class="norma-detalle-btns"><button class="norma-detalle-btn" onclick="normaToggle(this,\''+norma.replace(/'/g,"\\'")+'\')">📖 Ver completo</button><button class="norma-detalle-btn verde" onclick="irYConsultar(\''+norma.replace(/'/g,"\\'")+'\')">💬 Hacer pregunta</button></div>';
+  }).catch(()=>{detalle.innerHTML='<span style="color:var(--rojo)">Error al cargar</span>'});
+}
+
+function irYConsultar(norma){
+  ir('normas');
+  document.getElementById('buscar-q').value=norma;
+  buscarN();
+}
+let usuarioActual=null;
+function getUsuarios(){return JSON.parse(localStorage.getItem('usuarios_pol')||'[]')}
+function saveUsuarios(u){localStorage.setItem('usuarios_pol',JSON.stringify(u))}
+
+function toggleLogin(modo){
+  document.getElementById('form-registro').style.display=modo==='registro'?'block':'none';
+  document.getElementById('form-login').style.display=modo==='login'?'block':'none';
+}
+
+function registrar(){
+  const nombre=document.getElementById('reg-nombre').value.trim();
+  const correo=document.getElementById('reg-correo').value.trim().toLowerCase();
+  const pass=document.getElementById('reg-pass').value;
+  const errEl=document.getElementById('reg-error');
+  errEl.style.display='none';
+  if(!nombre||!correo||!pass){errEl.textContent='Completa todos los campos.';errEl.style.display='block';return}
+  if(pass.length<6){errEl.textContent='La contraseña debe tener mínimo 6 caracteres.';errEl.style.display='block';return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)){errEl.textContent='Correo electrónico no válido.';errEl.style.display='block';return}
+  if(esCorreoTemporal(correo)){errEl.textContent='Por favor usa un correo real (Gmail, Outlook, institucional, etc.). No se permiten correos temporales.';errEl.style.display='block';return}
+  const usuarios=getUsuarios();
+  if(usuarios.find(u=>u.correo===correo)){errEl.textContent='Este correo ya está registrado.';errEl.style.display='block';return}
+  const nuevo={nombre,correo,pass,fechaRegistro:Date.now(),diasPrueba:10};
+  usuarios.push(nuevo);
+  saveUsuarios(nuevo);
+  entrarApp(nuevo);
+}
+
+function iniciarSesion(){
+  const correo=document.getElementById('login-correo').value.trim().toLowerCase();
+  const pass=document.getElementById('login-pass').value;
+  const errEl=document.getElementById('login-error');
+  errEl.style.display='none';
+  // ===== ADMIN =====
+  const ADMIN_CORREO='ingcorozco07@gmail.com';
+  const ADMIN_PASS='Orozco01';
+  if(correo===ADMIN_CORREO&&pass===ADMIN_PASS){
+    entrarApp({nombre:'Administrador',correo,pass,fechaRegistro:Date.now(),diasPrueba:99999,esAdmin:true});
+    return;
+  }
+  // ===== USUARIOS =====
+  const usuarios=getUsuarios();
+  const u=usuarios.find(x=>x.correo===correo&&x.pass===pass);
+  if(!u){errEl.textContent='Correo o contraseña incorrectos.';errEl.style.display='block';return}
+  entrarApp(u);
+}
+
+function entrarApp(u){
+  usuarioActual=u;
+  localStorage.setItem('usuario_activo',JSON.stringify(u));
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app-screen').style.display='flex';
+  const nombre=u.nombre.split(' ')[0];
+  const diasRestantes=calcDiasRestantes(u);
+  // Bienvenida personalizada
+  const saludo=document.getElementById('bv-saludo');
+  if(saludo)saludo.textContent='👋 Bienvenido, '+nombre;
+  document.getElementById('user-info-txt').textContent='👮 '+nombre;
+  const tb=document.getElementById('trial-badge');
+  if(u.esAdmin){
+    document.getElementById('user-info-txt').textContent='🔧 Admin';
+    tb.textContent='● ADMINISTRADOR';
+    tb.className='trial-countdown';
+    tb.style.background='#1B2A6B';
+    return;
+  }
+  if(diasRestantes>0){
+    tb.textContent='● '+diasRestantes+' día'+(diasRestantes!==1?'s':'')+' prueba';
+    tb.className='trial-countdown'+(diasRestantes<=3?' urgente':'');
+  } else {
+    tb.textContent='● Prueba vencida';tb.className='trial-countdown urgente';
+  }
+  // Verificar si venció o aviso 2 días
+  setTimeout(()=>verificarPrueba(u),500);
+}
+
+function calcDiasRestantes(u){
+  const diasMs=u.diasPrueba*24*60*60*1000;
+  const vence=u.fechaRegistro+diasMs;
+  const restantes=Math.ceil((vence-Date.now())/(24*60*60*1000));
+  return Math.max(0,restantes);
+}
+
+// Auto-login
+window.addEventListener('DOMContentLoaded',()=>{
+  const ua=localStorage.getItem('usuario_activo');
+  if(ua){try{entrarApp(JSON.parse(ua))}catch(e){}}
+  renderGlosario();
+  renderFavs();
+  renderH();
+  document.getElementById('seg-c').addEventListener('keydown',e=>{if(e.key==='Enter')segCalle()});
+  document.getElementById('buscar-q').addEventListener('keydown',e=>{if(e.key==='Enter')buscarN()});
+  document.getElementById('glos-q').addEventListener('keydown',e=>{if(e.key==='Enter')buscarGlos()});
+  const z=document.getElementById('uzone');
+  z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag')});
+  z.addEventListener('dragleave',()=>z.classList.remove('drag'));
+  z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleF({target:{files:[f]}})});
+  // Bloquear zoom
+  document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+  let lastTouch=0;
+  document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTouch<350)e.preventDefault();lastTouch=now},{passive:false});
+});
+
+// ===== NAV =====
+function ir(p){
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+p).classList.add('active');
+  document.getElementById('main').scrollTop=0;
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+  const nb=document.getElementById('nb-'+p);
+  if(nb)nb.classList.add('active');
+  if(p==='historial')renderH();
+  if(p==='favoritos')renderFavs();
+}
+
+// ===== TEMA =====
+function toggleTheme(){
+  const d=document.documentElement;
+  const oscuro=d.getAttribute('data-theme')==='dark';
+  d.setAttribute('data-theme',oscuro?'':'dark');
+  document.getElementById('theme-btn').textContent=oscuro?'🌙':'☀️';
+  localStorage.setItem('tema',oscuro?'':' dark');
+}
+// Cargar tema
+(()=>{if(localStorage.getItem('tema')===' dark'){document.documentElement.setAttribute('data-theme','dark');setTimeout(()=>{const b=document.getElementById('theme-btn');if(b)b.textContent='☀️'},100)}})();
+
+// ===== IA =====
+async function IA(msgs){
+  const r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY,"HTTP-Referer":"https://consultorpolicial.netlify.app","X-Title":"Asesor Policial Colombia v3"},
+    body:JSON.stringify({model:"openrouter/auto",messages:[{role:"system",content:SYS},...msgs],max_tokens:1500,temperature:0.3})
+  });
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error((e.error&&e.error.message)||"Error "+r.status)}
+  const d=await r.json();
+  if(!d.choices||!d.choices[0])throw new Error("Sin respuesta");
+  return d.choices[0].message.content;
+}
+
+// ===== MENSAJES =====
+function addMsg(area,tipo,txt,lbl){
+  const a=document.getElementById(area);
+  const d=document.createElement('div');d.className='msg msg-'+tipo;
+  if(lbl){const l=document.createElement('div');l.className='msg-label';l.textContent=lbl;d.appendChild(l)}
+  const c=document.createElement('div');c.style.whiteSpace='pre-wrap';c.textContent=txt;d.appendChild(c);
+  if(tipo==='ia'){
+    const tts=document.createElement('button');tts.className='tts-btn';tts.textContent='🔊';tts.title='Escuchar respuesta';
+    tts.onclick=()=>hablar(txt);d.appendChild(tts);
+    const wa=document.createElement('button');wa.className='tts-btn';wa.textContent='📲';wa.title='Compartir por WhatsApp';
+    wa.onclick=()=>compartirWA(txt);d.appendChild(wa);
+  }
+  a.appendChild(d);d.scrollIntoView({behavior:'smooth',block:'nearest'});return d;
+}
+function addLoad(area,txt){
+  const a=document.getElementById(area);const d=document.createElement('div');
+  d.className='loading';d.id='ld-'+area;
+  d.innerHTML=`<div class="dots"><span></span><span></span><span></span></div>${txt}`;
+  a.appendChild(d);d.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function rmLoad(area){const e=document.getElementById('ld-'+area);if(e)e.remove()}
+function addErr(area,msg){const a=document.getElementById(area);const d=document.createElement('div');d.className='msg-error';d.textContent='❌ '+msg;a.appendChild(d)}
+
+// ===== TTS =====
+function hablar(txt){
+  if(!('speechSynthesis'in window)){alert('Tu navegador no soporta voz.');return}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt.substring(0,500));
+  u.lang='es-CO';u.rate=0.95;window.speechSynthesis.speak(u);
+}
+
+// ===== WHATSAPP =====
+function compartirWA(txt){
+  const msg=encodeURIComponent('📋 Asesor Policial Colombia:\n\n'+txt.substring(0,500)+'...\n\nconsultorpolicial.netlify.app');
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+
+// ===== HISTORIAL =====
+let hist=JSON.parse(localStorage.getItem('hp')||'[]');
+function saveH(tipo,txt,resp){
+  hist.unshift({id:Date.now(),tipo,texto:txt.substring(0,100),respuesta:resp,fecha:new Date().toLocaleString('es-CO')});
+  if(hist.length>30)hist=hist.slice(0,30);
+  localStorage.setItem('hp',JSON.stringify(hist));
+}
+function renderH(){
+  const l=document.getElementById('hlista');
+  if(!hist.length){l.innerHTML='<div class="hist-vacio">📋 No hay consultas guardadas aún</div>';return}
+  l.innerHTML=hist.map(h=>`<div class="hist-item"><div class="hist-tipo">${h.tipo}</div><div class="hist-texto">${h.texto}...</div><div class="hist-fecha">🕐 ${h.fecha}</div></div>`).join('');
+}
+function limpiarH(){if(confirm('¿Limpiar todo el historial?')){hist=[];localStorage.setItem('hp','[]');renderH()}}
+
+// ===== FAVORITOS =====
+let favs=JSON.parse(localStorage.getItem('favs_pol')||'[]');
+function toggleFav(e,nombre,btn){
+  e.stopPropagation();
+  const idx=favs.indexOf(nombre);
+  if(idx>=0){favs.splice(idx,1);btn.textContent='☆'}
+  else{favs.push(nombre);btn.textContent='⭐'}
+  localStorage.setItem('favs_pol',JSON.stringify(favs));
+}
+function renderFavs(){
+  const l=document.getElementById('favs-lista');
+  if(!favs.length){l.innerHTML='<div class="hist-vacio">⭐ No tienes favoritos aún.<br>Toca ☆ en cualquier norma para guardarla.</div>';return}
+  l.innerHTML=favs.map(f=>`<div class="norma-card" onclick="normaToggle(this,'${f}')"><div class="norma-ico">⭐</div><div><div class="norma-t">${f}</div><div class="norma-s">Toca para consultar</div></div></div>`).join('');
+}
+
+// ===== LIMPIAR =====
+function limpiar(tid,chatId,...extras){
+  document.getElementById(tid).value='';
+  if(chatId)document.getElementById(chatId).innerHTML='';
+  extras.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'});
+}
+function limpiarInterno(){
+  ['hechos-ap','nombre-ap'].forEach(id=>document.getElementById(id).value='');
+  ['tipo-rec','act-rec'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('chat-i').innerHTML='';
+}
+function limpiarRedactor(){
+  ['red-txt','red-nombre','red-lugar','red-fecha'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('tipo-doc').value='';
+  document.getElementById('chat-r').innerHTML='';
+}
+
+// ===== CALLE =====
+let hCalle=[];
+async function analizarCalle(){
+  const t=document.getElementById('calle-txt').value.trim();
+  if(!t||t.length<8){alert('Describe la situación.');return}
+  document.getElementById('chat-c').innerHTML='';
+  document.getElementById('sem-box').style.display='none';
+  document.getElementById('seg-c-box').style.display='none';
+  hCalle=[];
+  const q=`MODO CALLE:\n${t}\n\nResponde: 1)SEMÁFORO(VERDE/AMARILLO/ROJO) 2)Artículo vigente específico 3)Qué hacer 4)Qué evitar`;
+  addMsg('chat-c','user',t,'🚔 SITUACIÓN');
+  addLoad('chat-c','Analizando...');
+  hCalle.push({role:'user',content:q});
+  try{
+    const resp=await IA(hCalle);
+    hCalle.push({role:'assistant',content:resp});
+    rmLoad('chat-c');
+    const u=resp.toUpperCase();
+    document.getElementById('sem-box').style.display='flex';
+    document.querySelectorAll('.sem').forEach(s=>s.classList.remove('active'));
+    if(u.includes('VERDE')||u.includes('PUEDE HACERLO')||u.includes('ESTÁ PERMITIDO'))document.getElementById('sv').classList.add('active');
+    else if(u.includes('ROJO')||u.includes('NO PUEDE')||u.includes('PROHIBIDO'))document.getElementById('sr').classList.add('active');
+    else document.getElementById('sa').classList.add('active');
+    addMsg('chat-c','ia',resp,'⚖️ ANÁLISIS');
+    document.getElementById('seg-c-box').style.display='block';
+    saveH('🚔 Calle',t,resp);
+  }catch(e){rmLoad('chat-c');addErr('chat-c',e.message)}
+}
+function sitPredefinida(sit){
+  document.getElementById('calle-txt').value=sit;
+  analizarCalle();
+}
+async function segCalle(){
+  const i=document.getElementById('seg-c');const p=i.value.trim();if(!p)return;i.value='';
+  addMsg('chat-c','user',p,'💬');addLoad('chat-c','Consultando...');
+  hCalle.push({role:'user',content:p});
+  try{const r=await IA(hCalle);hCalle.push({role:'assistant',content:r});rmLoad('chat-c');addMsg('chat-c','ia',r,'⚖️')}
+  catch(e){rmLoad('chat-c');addErr('chat-c',e.message)}
+}
+
+// ===== APELACION =====
+async function generarAp(){
+  const tipo=document.getElementById('tipo-rec').value;
+  const act=document.getElementById('act-rec').value;
+  const nom=document.getElementById('nombre-ap').value.trim();
+  const hec=document.getElementById('hechos-ap').value.trim();
+  if(!tipo||!hec||hec.length<15){alert('Selecciona el tipo de recurso y describe los hechos.');return}
+  const btn=document.getElementById('btn-ap');btn.disabled=true;btn.textContent='⏳ Generando...';
+  document.getElementById('chat-i').innerHTML='';
+  const sol=`Genera recurso jurídico completo:
+TIPO: ${tipo} | ACTUACIÓN: ${act||'No especificada'} | UNIFORMADO: ${nom||'[NOMBRE]'}
+HECHOS: ${hec}
+
+Incluye: 1)Encabezado formal+autoridad destinataria 2)Hechos numerados 3)Fundamentos derecho (Ley 2196/2022, Ley 1952/2019, Art.29 CP) 4)Pretensiones 5)Pasos presentación: a quién/dónde/días hábiles 6)Pruebas recomendadas 7)Cierre+firma`;
+  addLoad('chat-i','Redactando recurso...');
+  try{
+    const r=await IA([{role:'user',content:sol}]);
+    rmLoad('chat-i');
+    const d=addMsg('chat-i','ia',r,'📝 RECURSO — REVISE CON ABOGADO ANTES DE PRESENTAR');
+    const b=document.createElement('button');b.className='btn-primary btn-copy';b.textContent='📋 Copiar';
+    b.onclick=()=>navigator.clipboard.writeText(r).then(()=>{b.textContent='✅ Copiado';setTimeout(()=>{b.textContent='📋 Copiar'},2000)});
+    d.appendChild(b);saveH('⚖️ '+tipo,hec,r);
+  }catch(e){rmLoad('chat-i');addErr('chat-i',e.message)}
+  btn.disabled=false;btn.textContent='📝 Generar recurso completo';
+}
+
+// ===== NORMAS =====
+async function consultaN(norma){
+  document.getElementById('chat-n').innerHTML='';
+  addLoad('chat-n','Cargando '+norma.split('-')[0].trim().substring(0,30)+'...');
+  const q=`Explícame la ${norma} en el contexto de la Policía Nacional de Colombia. Incluye: 1)Qué regula 2)Artículos clave para el uniformado 3)Ejemplos prácticos del servicio 4)Derechos y obligaciones que genera`;
+  try{const r=await IA([{role:'user',content:q}]);rmLoad('chat-n');addMsg('chat-n','ia',r,'📚 '+norma.split('-')[0].trim().toUpperCase().substring(0,40));saveH('📚 Norma',norma,r)}
+  catch(e){rmLoad('chat-n');addErr('chat-n',e.message)}
+}
+async function buscarN(){
+  const q=document.getElementById('buscar-q').value.trim();if(!q)return;
+  document.getElementById('chat-n').innerHTML='';addLoad('chat-n','Buscando: '+q+'...');
+  const p=`Busca y explica "${q}" en la normatividad de la Policía Nacional de Colombia. Incluye leyes, resoluciones o decretos aplicables, artículos específicos y cómo afecta al funcionario policial.`;
+  try{const r=await IA([{role:'user',content:p}]);rmLoad('chat-n');addMsg('chat-n','ia',r,'🔍 '+q.toUpperCase());saveH('🔍 Búsqueda',q,r)}
+  catch(e){rmLoad('chat-n');addErr('chat-n',e.message)}
+}
+
+// ===== REDACTOR =====
+async function redactar(){
+  const td=document.getElementById('tipo-doc').value;
+  const txt=document.getElementById('red-txt').value.trim();
+  const nom=document.getElementById('red-nombre').value.trim();
+  const lug=document.getElementById('red-lugar').value.trim();
+  const fec=document.getElementById('red-fecha').value.trim();
+  if(!txt||txt.length<10){alert('Describe los hechos.');return}
+  const btn=document.getElementById('btn-red');btn.disabled=true;btn.textContent='⏳ Redactando...';
+  document.getElementById('chat-r').innerHTML='';
+  const sol=`Redacta documento oficial tipo "${td||'informe'}" Policía Nacional Colombia:
+DESCRIPCIÓN: ${txt}
+OFICIAL: ${nom||'[NOMBRE Y GRADO]'} | LUGAR: ${lug||'[LUGAR]'} | FECHA: ${fec||'[FECHA Y HORA]'}
+Genera: 1)Encabezado institucional 2)Redacción policial profesional 3)Terminología técnica correcta 4)Referencias normativas vigentes pertinentes 5)Ortografía perfecta 6)Espacio firma`;
+  addLoad('chat-r','Redactando...');
+  try{
+    const r=await IA([{role:'user',content:sol}]);
+    rmLoad('chat-r');
+    const d=addMsg('chat-r','ia',r,'✍️ DOCUMENTO GENERADO');
+    const b=document.createElement('button');b.className='btn-primary btn-copy';b.textContent='📋 Copiar documento';
+    b.onclick=()=>navigator.clipboard.writeText(r).then(()=>{b.textContent='✅ Copiado';setTimeout(()=>{b.textContent='📋 Copiar documento'},2000)});
+    d.appendChild(b);saveH('✍️ '+(td||'Documento'),txt,r);
+  }catch(e){rmLoad('chat-r');addErr('chat-r',e.message)}
+  btn.disabled=false;btn.textContent='✍️ Generar documento oficial';
+}
+
+// ===== ARCHIVOS =====
+let archivoB64=null,archivoT=null;
+function handleF(e){
+  const f=e.target.files[0];if(!f)return;
+  const p=document.getElementById('fprev');
+  p.style.display='flex';p.className='file-prev';
+  p.innerHTML=`<div style="font-size:22px">${f.type.includes('pdf')?'📄':'🖼️'}</div><div><div class="fname">${f.name}</div><div class="fsize">${(f.size/1024).toFixed(1)} KB</div></div>`;
+  const reader=new FileReader();
+  reader.onload=ev=>{archivoB64=ev.target.result.split(',')[1];archivoT=f.type};
+  reader.readAsDataURL(f);
+}
+async function analizarArc(){
+  const ctx=document.getElementById('arc-ctx').value.trim();
+  const acc=document.getElementById('arc-acc').value;
+  const btn=document.getElementById('btn-arc');
+  if(!archivoB64&&!ctx){alert('Selecciona un archivo o agrega contexto.');return}
+  btn.disabled=true;btn.textContent='⏳ Analizando...';
+  document.getElementById('chat-a').innerHTML='';
+  const inst=acc==='auto'?'Analiza este documento. Determina qué tipo es y analiza su importancia jurídica para el policía.':acc==='analizar'?'Analiza el caso.':acc==='norma'?'Explica esta norma.':acc==='apelar'?'Genera apelación basada en este documento.':'Resume el documento.';
+  const msgs=archivoB64?[{role:'user',content:[{type:archivoT.includes('pdf')?'document':'image_url',...(archivoT.includes('pdf')?{source:{type:'base64',media_type:archivoT,data:archivoB64}}:{image_url:{url:`data:${archivoT};base64,${archivoB64}`}})},{type:'text',text:inst+(ctx?'\nContexto: '+ctx:'')}]}]:[{role:'user',content:inst+(ctx?'\nDocumento: '+ctx:'')}];
+  addLoad('chat-a','Analizando...');
+  try{const r=await IA(msgs);rmLoad('chat-a');addMsg('chat-a','ia',r,'📎 ANÁLISIS');saveH('📎 Archivo',inst,r)}
+  catch(e){rmLoad('chat-a');addErr('chat-a','No se pudo leer el archivo. Describe su contenido en el campo de contexto.')}
+  btn.disabled=false;btn.textContent='🔍 Analizar documento';
+}
+
+// ===== CALCULADORA PLAZOS =====
+function calcularPlazo(){
+  const tipo=document.getElementById('calc-tipo').value;
+  const fechaStr=document.getElementById('calc-fecha').value;
+  const res=document.getElementById('calc-result');
+  if(!tipo||!fechaStr){res.style.display='none';return}
+  const dias=parseInt(tipo);
+  const inicio=new Date(fechaStr+'T00:00:00');
+  let contados=0;let fecha=new Date(inicio);
+  while(contados<dias){
+    fecha.setDate(fecha.getDate()+1);
+    if(fecha.getDay()!==0&&fecha.getDay()!==6)contados++;
+  }
+  const opciones={weekday:'long',year:'numeric',month:'long',day:'numeric'};
+  const fechaFmt=fecha.toLocaleDateString('es-CO',opciones);
+  const hoy=new Date();
+  const diffDias=Math.ceil((fecha-hoy)/(24*60*60*1000));
+  document.getElementById('calc-fecha-result').textContent=fechaFmt;
+  document.getElementById('calc-dias-txt').textContent=diffDias>0?`Quedan ${diffDias} días calendario`:(diffDias===0?'¡Vence hoy!':'⚠️ Plazo vencido hace '+Math.abs(diffDias)+' días');
+  const alert=document.getElementById('calc-alert');
+  alert.style.display=diffDias<=3?'block':'none';
+  res.style.display='block';
+}
+
+// ===== GLOSARIO =====
+const GLOSARIO=[
+  {t:'Anotación',d:'Registro en la hoja de vida del uniformado que puede ser positivo o negativo. Las anotaciones negativas afectan la calificación de servicios y pueden generar consecuencias disciplinarias.'},
+  {t:'Calificación de Servicios',d:'Evaluación periódica del desempeño del uniformado. Incluye factores como comportamiento, aptitudes y rendimiento. Una calificación desfavorable puede impedir ascensos.'},
+  {t:'Debido Proceso',d:'Derecho fundamental consagrado en el Art. 29 de la Constitución. En disciplinario, implica derecho a conocer los cargos, presentar descargos y tener defensa.'},
+  {t:'Descargos',d:'Derecho del uniformado a presentar su versión de los hechos y pruebas antes de que se tome una decisión disciplinaria en su contra.'},
+  {t:'Escalafón',d:'Listado oficial de los miembros de la Policía Nacional organizados según su grado, antigüedad y méritos. Determina el orden de ascensos y comisiones.'},
+  {t:'Falta Disciplinaria',d:'Conducta u omisión del uniformado que viola las normas del régimen disciplinario (Ley 2196/2022). Puede ser gravísima, grave o leve.'},
+  {t:'Flagrancia',d:'Situación en que una persona es sorprendida en el momento de cometer un delito o inmediatamente después. Permite la captura sin orden judicial.'},
+  {t:'Fuero Disciplinario',d:'Principio por el cual los uniformados de la Policía Nacional son juzgados disciplinariamente por sus propias autoridades y normas especiales.'},
+  {t:'Habeas Corpus',d:'Acción constitucional que protege la libertad personal. Procede cuando alguien es capturado o detenido con violación de garantías constitucionales.'},
+  {t:'Medida Correctiva',d:'Sanción no privativa de la libertad prevista en la Ley 1801 de 2016 (CNSC) que puede imponer el policía a ciudadanos que cometan comportamientos contrarios a la convivencia.'},
+  {t:'Policía Judicial',d:'Función investigativa que ejercen algunos funcionarios de la Policía Nacional (principalmente DIJIN) bajo la dirección de la Fiscalía General de la Nación.'},
+  {t:'Recurso de Apelación',d:'Medio de impugnación ante el superior jerárquico contra decisiones disciplinarias. En la Ley 2196/2022 tiene un plazo de 10 días hábiles.'},
+  {t:'Recurso de Reposición',d:'Medio de impugnación ante el mismo funcionario que tomó la decisión. Plazo: 5 días hábiles. Primera opción antes de la apelación.'},
+  {t:'Retención Transitoria',d:'Medida contemplada en el Art. 155 de la Ley 1801 de 2016. Permite retener a una persona hasta por 12 horas en casos específicos de alteración del orden público.'},
+  {t:'Traslado por Protección',d:'Medida del Art. 155 Ley 1801. Permite llevar a una persona a un lugar seguro cuando su integridad está en riesgo, por máximo 12 horas.'},
+  {t:'Tutela',d:'Acción constitucional para proteger derechos fundamentales. Procede contra autoridades cuando no hay otro mecanismo eficaz. Fallo en 10 días.'},
+  {t:'Uso Diferenciado de la Fuerza',d:'Principio del Decreto 1231/2024: la fuerza debe ser proporcional a la amenaza. Se privilegia el diálogo, luego medios menos letales y en último caso armas de fuego.'},
+];
+function renderGlosario(){
+  const l=document.getElementById('glos-lista');
+  l.innerHTML=GLOSARIO.map((g,i)=>`<div class="glos-item" onclick="this.classList.toggle('open')"><div class="glos-term">📖 ${g.t}</div><div class="glos-def">${g.d}</div></div>`).join('');
+}
+async function buscarGlos(){
+  const q=document.getElementById('glos-q').value.trim();if(!q)return;
+  document.getElementById('chat-glos').innerHTML='';
+  addLoad('chat-glos','Buscando término: '+q+'...');
+  const p=`Define y explica el término "${q}" en el contexto de la Policía Nacional de Colombia. Incluye la norma que lo regula si aplica.`;
+  try{const r=await IA([{role:'user',content:p}]);rmLoad('chat-glos');addMsg('chat-glos','ia',r,'📖 '+q.toUpperCase())}
+  catch(e){rmLoad('chat-glos');addErr('chat-glos',e.message)}
+}
+
+// ===== VOZ =====
+let recog=null,grabando=false;
+function voz(tid,bid){
+  if(!('webkitSpeechRecognition'in window)&&!('SpeechRecognition'in window)){alert('Usa Chrome o Edge para voz.');return}
+  if(grabando){recog&&recog.stop();grabando=false;const b=document.getElementById(bid);if(b){b.classList.remove('on');b.textContent='🎤'}return}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recog=new SR();recog.lang='es-CO';recog.continuous=false;recog.interimResults=false;
+  recog.onstart=()=>{grabando=true;const b=document.getElementById(bid);if(b){b.classList.add('on');b.textContent='⏹️'}};
+  recog.onresult=e=>{const t=e.results[0][0].transcript;const ta=document.getElementById(tid);if(ta)ta.value+=(ta.value?' ':'')+t;grabando=false;const b=document.getElementById(bid);if(b){b.classList.remove('on');b.textContent='🎤'}};
+  recog.onerror=recog.onend=()=>{grabando=false;const b=document.getElementById(bid);if(b){b.classList.remove('on');b.textContent='🎤'}};
+  recog.start();
+}
+function vozGlobal(){
+  const m={'panel-calle':['calle-txt','mic-c'],'panel-interno':['hechos-ap','mic-i'],'panel-redactor':['red-txt','mic-r'],'panel-archivos':['arc-ctx','mic-a']};
+  const activo=Object.keys(m).find(p=>document.getElementById(p).classList.contains('active'));
+  if(activo)voz(m[activo][0],m[activo][1]);
+  else{ir('calle');setTimeout(()=>voz('calle-txt','mic-c'),300)}
+}
+</script>
+</body>
+</html>

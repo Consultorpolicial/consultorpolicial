@@ -1007,7 +1007,7 @@ function toggleTheme(){
 async function IA(msgs){
   const GEMINI_KEY="AIzaSyCsKDG3BbYY5ct39zTSME6S8jePuVvBJ9Q";
   const contenido=SYS+"\n\n"+msgs.map(m=>(m.role==='user'?'CONSULTA: ':'RESPUESTA: ')+m.content).join("\n\n");
-  const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,{
+  const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({

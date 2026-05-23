@@ -911,8 +911,8 @@ function iniciarSesion(){
   const errEl=document.getElementById('login-error');
   errEl.style.display='none';
   // ===== ADMIN =====
-  const ADMIN_CORREO='TU_CORREO_AQUI';
-  const ADMIN_PASS='TU_CONTRASEÑA_AQUI';
+  const ADMIN_CORREO='001';
+  const ADMIN_PASS='001';
   if(correo===ADMIN_CORREO&&pass===ADMIN_PASS){
     entrarApp({nombre:'Administrador',correo,pass,fechaRegistro:Date.now(),diasPrueba:99999,esAdmin:true});
     return;

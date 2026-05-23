@@ -907,8 +907,8 @@ function iniciarSesion(){
   const errEl=document.getElementById('login-error');
   errEl.style.display='none';
   // ===== ADMIN =====
-  const ADMIN_CORREO='ingcorozco07@gmail.com';
-  const ADMIN_PASS='Orozco01';
+  const ADMIN_CORREO='TU_CORREO_AQUI';
+  const ADMIN_PASS='TU_CONTRASEÑA_AQUI';
   if(correo===ADMIN_CORREO&&pass===ADMIN_PASS){
     entrarApp({nombre:'Administrador',correo,pass,fechaRegistro:Date.now(),diasPrueba:99999,esAdmin:true});
     return;
@@ -1003,7 +1003,7 @@ function toggleTheme(){
 async function IA(msgs){
   const r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
     method:"POST",
-    headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY,"HTTP-Referer":"https://consultorpolicial.netlify.app","X-Title":"Asesor Policial Colombia v3"},
+    headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY,"HTTP-Referer":"https://consultorpolicial.vercel.app","X-Title":"Asesor Policial Colombia v3"},
     body:JSON.stringify({model:"openrouter/auto",messages:[{role:"system",content:SYS},...msgs],max_tokens:1500,temperature:0.3})
   });
   if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error((e.error&&e.error.message)||"Error "+r.status)}

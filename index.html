@@ -911,8 +911,8 @@ function iniciarSesion(){
   const errEl=document.getElementById('login-error');
   errEl.style.display='none';
   // ===== ADMIN =====
-  const ADMIN_CORREO='001';
-  const ADMIN_PASS='001';
+  const ADMIN_CORREO='TU_CORREO_AQUI';
+  const ADMIN_PASS='TU_CONTRASEÑA_AQUI';
   if(correo===ADMIN_CORREO&&pass===ADMIN_PASS){
     entrarApp({nombre:'Administrador',correo,pass,fechaRegistro:Date.now(),diasPrueba:99999,esAdmin:true});
     return;
@@ -1005,20 +1005,21 @@ function toggleTheme(){
 
 // ===== IA =====
 async function IA(msgs){
-  const GEMINI_KEY="AIzaSyAGEXyZSrfNYglC8LSeuJBrAIvLPPgMfrI";
-  const contenido=SYS+"\n\n"+msgs.map(m=>(m.role==='user'?'CONSULTA: ':'RESPUESTA: ')+m.content).join("\n\n");
-  const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
+  const GROQ_KEY="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";
+  const r=await fetch("https://api.groq.com/openai/v1/chat/completions",{
     method:"POST",
-    headers:{"Content-Type":"application/json"},
+    headers:{"Content-Type":"application/json","Authorization":"Bearer "+GROQ_KEY},
     body:JSON.stringify({
-      contents:[{role:"user",parts:[{text:contenido}]}],
-      generationConfig:{maxOutputTokens:1500,temperature:0.3}
+      model:"llama-3.3-70b-versatile",
+      messages:[{role:"system",content:SYS},...msgs],
+      max_tokens:1500,
+      temperature:0.3
     })
   });
   if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error((e.error&&e.error.message)||"Error "+r.status)}
   const d=await r.json();
-  if(!d.candidates||!d.candidates[0])throw new Error("Sin respuesta");
-  return d.candidates[0].content.parts[0].text;
+  if(!d.choices||!d.choices[0])throw new Error("Sin respuesta");
+  return d.choices[0].message.content;
 }
 
 // ===== MENSAJES =====

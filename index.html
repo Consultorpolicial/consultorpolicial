@@ -762,7 +762,7 @@ input[type=text],input[type=email],input[type=password]{background-image:none}
 </div><!-- fin app-screen -->
 
 <script>
-const KEY="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";
+const KEY="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";
 const SYS=`Eres asesor jurídico experto en normatividad vigente de la Policía Nacional de Colombia para TODOS los funcionarios sin importar grado o especialidad.
 
 NORMATIVA VIGENTE:
@@ -849,24 +849,28 @@ function verificarPrueba(u){
 
 // ===== NORMAS TOGGLE =====
 function normaToggle(el,norma){
-  const detalleId='det-'+norma.replace(/\s/g,'').substring(0,20);
+  const detalleId='det-'+norma.replace(/[^a-zA-Z0-9]/g,'').substring(0,20);
   let detalle=document.getElementById(detalleId);
   if(detalle){
-    detalle.classList.toggle('visible');
-    el.classList.toggle('expandida');
+    const visible=detalle.classList.contains('visible');
+    detalle.classList.toggle('visible',!visible);
+    el.classList.toggle('expandida',!visible);
     return;
   }
-  // Crear detalle
   detalle=document.createElement('div');
   detalle.className='norma-detalle visible';
   detalle.id=detalleId;
-  detalle.innerHTML=`<div style="color:var(--gris);font-size:11px;font-style:italic">Cargando información...</div>`;
+  detalle.innerHTML=`<div class="loading"><div class="dots"><span></span><span></span><span></span></div>Cargando resumen...</div>`;
   el.classList.add('expandida');
   el.parentNode.insertBefore(detalle,el.nextSibling);
-  // Consultar IA
-  IA([{role:'user',content:`Resume en máximo 3 líneas qué es "${norma}" y para qué le sirve al policía en su trabajo diario. Luego da los 2 artículos más importantes.`}]).then(r=>{
-    detalle.innerHTML=r+'<div class="norma-detalle-btns"><button class="norma-detalle-btn" onclick="normaToggle(this,\''+norma.replace(/'/g,"\\'")+'\')">📖 Ver completo</button><button class="norma-detalle-btn verde" onclick="irYConsultar(\''+norma.replace(/'/g,"\\'")+'\')">💬 Hacer pregunta</button></div>';
-  }).catch(()=>{detalle.innerHTML='<span style="color:var(--rojo)">Error al cargar</span>'});
+  const n=norma.replace(/'/g,"\\'");
+  IA([{role:'user',content:`En máximo 3 líneas explica qué es "${norma}" y para qué le sirve al policía colombiano en su trabajo. Luego menciona los 2 artículos más importantes.`}])
+  .then(r=>{
+    detalle.innerHTML=`<div style="white-space:pre-wrap;font-size:12px;line-height:1.6;margin-bottom:9px">${r}</div><div class="norma-detalle-btns"><button class="norma-detalle-btn" onclick="irYConsultar('${n}')">💬 Consultar en detalle</button></div>`;
+  })
+  .catch(()=>{
+    detalle.innerHTML=`<div style="font-size:12px;color:var(--gris);margin-bottom:9px">Toca el botón para consultar esta norma en detalle.</div><div class="norma-detalle-btns"><button class="norma-detalle-btn" onclick="irYConsultar('${n}')">💬 Consultar en detalle</button></div>`;
+  });
 }
 
 function irYConsultar(norma){
